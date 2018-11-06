@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QMessageBox>
 #include <QZXing/QZXing>
+#include <zint/backend/zint.h>
 
 namespace Ui {
 class MainWindow;
@@ -27,6 +28,8 @@ private slots:
     void on_encoderButton3_clicked();
 
     void on_encoderButton4_clicked();
+
+    void on_encodeBarcodeBtn_clicked();
 
 private:
     Ui::MainWindow *ui;

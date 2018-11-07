@@ -7,11 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>559</width>
-    <height>524</height>
+    <height>547</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>条码/二维码生成工具</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QTabWidget" name="tabWidget">
@@ -20,7 +20,7 @@
       <x>0</x>
       <y>0</y>
       <width>561</width>
-      <height>481</height>
+      <height>511</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -30,13 +30,13 @@
      <attribute name="title">
       <string>Tab 1</string>
      </attribute>
-     <widget class="QLabel" name="label">
+     <widget class="QLabel" name="codeLabel">
       <property name="geometry">
        <rect>
         <x>50</x>
         <y>50</y>
         <width>54</width>
-        <height>21</height>
+        <height>23</height>
        </rect>
       </property>
       <property name="text">
@@ -48,8 +48,8 @@
        <rect>
         <x>60</x>
         <y>90</y>
-        <width>301</width>
-        <height>271</height>
+        <width>366</width>
+        <height>366</height>
        </rect>
       </property>
       <property name="text">
@@ -62,30 +62,30 @@
         <x>110</x>
         <y>50</y>
         <width>181</width>
-        <height>20</height>
+        <height>23</height>
        </rect>
       </property>
      </widget>
      <widget class="QPushButton" name="encoderButton">
       <property name="geometry">
        <rect>
-        <x>330</x>
+        <x>310</x>
         <y>50</y>
         <width>75</width>
         <height>23</height>
        </rect>
       </property>
       <property name="text">
-       <string>编码</string>
+       <string>生成二维码</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_3">
+     <widget class="QLabel" name="remarkLabel">
       <property name="geometry">
        <rect>
         <x>70</x>
         <y>20</y>
         <width>31</width>
-        <height>21</height>
+        <height>23</height>
        </rect>
       </property>
       <property name="text">
@@ -98,14 +98,14 @@
         <x>110</x>
         <y>20</y>
         <width>181</width>
-        <height>20</height>
+        <height>23</height>
        </rect>
       </property>
      </widget>
      <widget class="QPushButton" name="encodeBarcodeBtn">
       <property name="geometry">
        <rect>
-        <x>420</x>
+        <x>400</x>
         <y>50</y>
         <width>75</width>
         <height>23</height>
@@ -120,13 +120,13 @@
      <attribute name="title">
       <string>Tab 2</string>
      </attribute>
-     <widget class="QLabel" name="label_2">
+     <widget class="QLabel" name="codeLabel1">
       <property name="geometry">
        <rect>
         <x>50</x>
         <y>50</y>
         <width>54</width>
-        <height>21</height>
+        <height>23</height>
        </rect>
       </property>
       <property name="text">
@@ -139,7 +139,7 @@
         <x>110</x>
         <y>50</y>
         <width>181</width>
-        <height>20</height>
+        <height>23</height>
        </rect>
       </property>
      </widget>
@@ -148,8 +148,8 @@
        <rect>
         <x>50</x>
         <y>90</y>
-        <width>301</width>
-        <height>271</height>
+        <width>366</width>
+        <height>366</height>
        </rect>
       </property>
       <property name="text">
@@ -159,14 +159,14 @@
      <widget class="QPushButton" name="encoderButton1">
       <property name="geometry">
        <rect>
-        <x>330</x>
+        <x>310</x>
         <y>50</y>
         <width>75</width>
         <height>23</height>
        </rect>
       </property>
       <property name="text">
-       <string>编码</string>
+       <string>生成二维码</string>
       </property>
      </widget>
      <widget class="QLineEdit" name="remarkLineEdit1">
@@ -175,21 +175,34 @@
         <x>110</x>
         <y>20</y>
         <width>181</width>
-        <height>20</height>
+        <height>23</height>
        </rect>
       </property>
      </widget>
-     <widget class="QLabel" name="label_4">
+     <widget class="QLabel" name="remarkLabel1">
       <property name="geometry">
        <rect>
         <x>70</x>
         <y>20</y>
         <width>31</width>
-        <height>21</height>
+        <height>23</height>
        </rect>
       </property>
       <property name="text">
        <string>备注</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="encodeBarcodeBtn1">
+      <property name="geometry">
+       <rect>
+        <x>400</x>
+        <y>50</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>生成条码</string>
       </property>
      </widget>
     </widget>
@@ -203,30 +216,30 @@
         <x>110</x>
         <y>50</y>
         <width>181</width>
-        <height>20</height>
+        <height>23</height>
        </rect>
       </property>
      </widget>
-     <widget class="QLabel" name="label_5">
+     <widget class="QLabel" name="remarkLabel2">
       <property name="geometry">
        <rect>
         <x>70</x>
         <y>20</y>
         <width>31</width>
-        <height>21</height>
+        <height>23</height>
        </rect>
       </property>
       <property name="text">
        <string>备注</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_6">
+     <widget class="QLabel" name="codeLabel2">
       <property name="geometry">
        <rect>
         <x>50</x>
         <y>50</y>
         <width>54</width>
-        <height>21</height>
+        <height>23</height>
        </rect>
       </property>
       <property name="text">
@@ -238,8 +251,8 @@
        <rect>
         <x>50</x>
         <y>90</y>
-        <width>301</width>
-        <height>271</height>
+        <width>366</width>
+        <height>366</height>
        </rect>
       </property>
       <property name="text">
@@ -249,14 +262,14 @@
      <widget class="QPushButton" name="encoderButton2">
       <property name="geometry">
        <rect>
-        <x>330</x>
+        <x>310</x>
         <y>50</y>
         <width>75</width>
         <height>23</height>
        </rect>
       </property>
       <property name="text">
-       <string>编码</string>
+       <string>生成二维码</string>
       </property>
      </widget>
      <widget class="QLineEdit" name="remarkLineEdit2">
@@ -265,8 +278,21 @@
         <x>110</x>
         <y>20</y>
         <width>181</width>
-        <height>20</height>
+        <height>23</height>
        </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="encodeBarcodeBtn2">
+      <property name="geometry">
+       <rect>
+        <x>400</x>
+        <y>50</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>生成条码</string>
       </property>
      </widget>
     </widget>
@@ -280,30 +306,30 @@
         <x>110</x>
         <y>50</y>
         <width>181</width>
-        <height>20</height>
+        <height>23</height>
        </rect>
       </property>
      </widget>
-     <widget class="QLabel" name="label_7">
+     <widget class="QLabel" name="remarkLabel3">
       <property name="geometry">
        <rect>
         <x>70</x>
         <y>20</y>
         <width>31</width>
-        <height>21</height>
+        <height>23</height>
        </rect>
       </property>
       <property name="text">
        <string>备注</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_8">
+     <widget class="QLabel" name="codeLabel3">
       <property name="geometry">
        <rect>
         <x>50</x>
         <y>50</y>
         <width>54</width>
-        <height>21</height>
+        <height>23</height>
        </rect>
       </property>
       <property name="text">
@@ -315,8 +341,8 @@
        <rect>
         <x>50</x>
         <y>90</y>
-        <width>301</width>
-        <height>271</height>
+        <width>366</width>
+        <height>366</height>
        </rect>
       </property>
       <property name="text">
@@ -326,14 +352,14 @@
      <widget class="QPushButton" name="encoderButton3">
       <property name="geometry">
        <rect>
-        <x>330</x>
+        <x>310</x>
         <y>50</y>
         <width>75</width>
         <height>23</height>
        </rect>
       </property>
       <property name="text">
-       <string>编码</string>
+       <string>生成二维码</string>
       </property>
      </widget>
      <widget class="QLineEdit" name="remarkLineEdit3">
@@ -342,8 +368,21 @@
         <x>110</x>
         <y>20</y>
         <width>181</width>
-        <height>20</height>
+        <height>23</height>
        </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="encodeBarcodeBtn3">
+      <property name="geometry">
+       <rect>
+        <x>400</x>
+        <y>50</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>生成条码</string>
       </property>
      </widget>
     </widget>
@@ -357,30 +396,30 @@
         <x>110</x>
         <y>50</y>
         <width>181</width>
-        <height>20</height>
+        <height>23</height>
        </rect>
       </property>
      </widget>
-     <widget class="QLabel" name="label_9">
+     <widget class="QLabel" name="remarkLabel4">
       <property name="geometry">
        <rect>
         <x>70</x>
         <y>20</y>
         <width>31</width>
-        <height>21</height>
+        <height>23</height>
        </rect>
       </property>
       <property name="text">
        <string>备注</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_10">
+     <widget class="QLabel" name="codeLabel4">
       <property name="geometry">
        <rect>
         <x>50</x>
         <y>50</y>
         <width>54</width>
-        <height>21</height>
+        <height>23</height>
        </rect>
       </property>
       <property name="text">
@@ -392,8 +431,8 @@
        <rect>
         <x>50</x>
         <y>90</y>
-        <width>301</width>
-        <height>271</height>
+        <width>366</width>
+        <height>366</height>
        </rect>
       </property>
       <property name="text">
@@ -403,14 +442,14 @@
      <widget class="QPushButton" name="encoderButton4">
       <property name="geometry">
        <rect>
-        <x>330</x>
+        <x>310</x>
         <y>50</y>
         <width>75</width>
         <height>23</height>
        </rect>
       </property>
       <property name="text">
-       <string>编码</string>
+       <string>生成二维码</string>
       </property>
      </widget>
      <widget class="QLineEdit" name="remarkLineEdit4">
@@ -419,8 +458,21 @@
         <x>110</x>
         <y>20</y>
         <width>181</width>
-        <height>20</height>
+        <height>23</height>
        </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="encodeBarcodeBtn4">
+      <property name="geometry">
+       <rect>
+        <x>400</x>
+        <y>50</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>生成条码</string>
       </property>
      </widget>
     </widget>

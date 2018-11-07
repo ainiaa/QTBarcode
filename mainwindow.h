@@ -12,6 +12,7 @@
 #include <QDir>
 #include <zint/backend/zint.h>
 #include <config.h>
+#include<cstdio>
 
 namespace Ui {
 class MainWindow;

@@ -1,6 +1,7 @@
 ﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -134,7 +135,8 @@ void MainWindow::encodeQRButtonClicked(int index)
             my_symbol->scale = 3;
             QString fileName = cfg->GetConfigPath() +"output.bmp" ;
             QByteArray fileNameBa = fileName.toLatin1();
-            strcpy_s(my_symbol->outfile, fileNameBa.data());
+             const char * fileNameCC =fileNameBa.data();
+            strcpy_s(my_symbol->outfile,fileNameCC);
             unsigned char* ch;
             QByteArray ba = barcode.toLatin1();
             ch=(unsigned char *)ba.data();
@@ -142,8 +144,9 @@ void MainWindow::encodeQRButtonClicked(int index)
             ZBarcode_Print(my_symbol,0);
             ZBarcode_Delete(my_symbol);
             QImage* barcodeImg= new QImage();
-            barcodeImg->load("output.bmp");
+            barcodeImg->load(fileName);
             QPixmap pixmap = QPixmap::fromImage(*barcodeImg);
+            remove(fileNameCC);
             QLabel* currentImgLabel =this->getImgLabel(index);
             int width = currentImgLabel->width();
             int height = currentImgLabel->height();
@@ -205,12 +208,13 @@ void MainWindow::encodeBarcodeButtonClicked(int index)
         if(my_symbol != NULL)  {
             my_symbol->symbology= BARCODE_CODE128;
             my_symbol->border_width = 2;
-            my_symbol->scale = 5;
+            my_symbol->scale = 2;
             my_symbol->input_mode = DATA_MODE;
 
             QString fileName = cfg->GetConfigPath() +"output.bmp" ;
             QByteArray fileNameBa = fileName.toLatin1();
-            strcpy_s(my_symbol->outfile, fileNameBa.data());
+            const char * fileNameCC =fileNameBa.data();
+            strcpy_s(my_symbol->outfile, fileNameCC);
 
             unsigned char* ch;
             QByteArray ba = barcode.toUtf8();
@@ -219,8 +223,9 @@ void MainWindow::encodeBarcodeButtonClicked(int index)
             ZBarcode_Print(my_symbol,0); //
             ZBarcode_Delete(my_symbol);
             QImage* barcodeImg= new QImage();
-            barcodeImg->load("output.bmp");
+            barcodeImg->load(fileName);
             QPixmap pixmap = QPixmap::fromImage(*barcodeImg);
+            remove(fileNameCC);
             QLabel* currentImgLabel =this->getImgLabel(index);
             int width = currentImgLabel->width();
             int height = currentImgLabel->height();

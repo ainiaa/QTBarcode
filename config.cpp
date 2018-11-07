@@ -1,6 +1,5 @@
 #include "config.h"
 #include <QtCore/QtCore>
-#include <QDebug>
 #include <QDir>
 
 Config::Config(QString qstrfilename)
@@ -17,12 +16,10 @@ Config::Config(QString qstrfilename)
 
     m_psetting = new QSettings(m_qstrFileName, QSettings::IniFormat);
     m_psetting->setIniCodec("UTF8");
-    qDebug() << m_qstrFileName;
 }
 Config::~Config()
 {
     delete m_psetting;
-    m_psetting = 0;
 }
 void Config::Set(QString qstrnodename,QString qstrkeyname,QVariant qvarvalue)
 {

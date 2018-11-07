@@ -1,13 +1,17 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+
 #include <QMainWindow>
 #include <QMessageBox>
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QTextCodec>
+#include <QSettings>
+#include <QDir>
 #include <zint/backend/zint.h>
+#include <config.h>
 
 namespace Ui {
 class MainWindow;
@@ -28,6 +32,10 @@ protected:
     QLineEdit* getRemarkLineEdit(int index);
     QLineEdit* getBarcodeLineEdit(int index);
     QLabel* getImgLabel(int index);
+    QLabel* getLatestOperateLabel(int index);
+    void loadConfig();
+    void writeConfig();
+
 
 private slots:
     void on_encoderButton_clicked();
@@ -51,9 +59,11 @@ private slots:
     void on_encodeBarcodeBtn1_clicked();
 
 private:
-    QWidget* remarkLineEditGroup[5];
-    QWidget* barcodeLineEditGroup[5];
-    QWidget* imgLabelGroup[5];
+    static const int GROUP_NUM = 5;
+    QWidget* remarkLineEditGroup[GROUP_NUM];
+    QWidget* barcodeLineEditGroup[GROUP_NUM];
+    QWidget* imgLabelGroup[GROUP_NUM];
+    QWidget* latestOperateLabelGroup[GROUP_NUM];
     Ui::MainWindow *ui;
 };
 

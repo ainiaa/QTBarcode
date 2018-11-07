@@ -7,13 +7,64 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     groupCompent();
+    loadConfig();
     setFixedSize(this->width(), this->height());
 }
 
 MainWindow::~MainWindow()
 {
+    this->writeConfig();
     delete ui;
 }
+
+//加载config
+void MainWindow::loadConfig()
+{
+    Config cfg;
+
+    for(int i =0; i < GROUP_NUM;i++)
+    {
+        QString index = QString::number(i);
+        QString remark = cfg.Get(index,"remark").toString();
+        if (!remark.isEmpty())
+        {
+            this->getRemarkLineEdit(i)->setText(remark);
+            ui->tabWidget->setTabText(i,remark);
+        }
+
+        QString barcode =  cfg.Get(index,"barcode").toString();
+        if (!barcode.isEmpty())
+        {
+            this->getBarcodeLineEdit(i)->setText(barcode);
+            QString latestOperate = cfg.Get(index,"latestOperate").toString();
+            if (latestOperate == QString::number(BARCODE_QRCODE))
+            {
+                this->encodeQRButtonClicked(i);
+            } else {
+                this->encodeBarcodeButtonClicked(i);
+            }
+        }
+    }
+}
+
+//写入config
+void MainWindow::writeConfig()
+{
+    Config cfg;
+
+    for(int i =0; i < GROUP_NUM;i++)
+    {
+        QString index = QString::number(i);
+        QString remark = this->getRemarkLineEdit(i)->text();
+        cfg.Set(index,"remark",remark);
+        QString barcode = this->getBarcodeLineEdit(i)->text();
+        cfg.Set(index,"barcode",barcode);
+        QString latestOperate = this->getLatestOperateLabel(i)->text();
+        cfg.Set(index,"latestOperate",latestOperate);
+    }
+}
+
+
 
 void MainWindow::groupCompent()
 {
@@ -34,6 +85,12 @@ void MainWindow::groupCompent()
     imgLabelGroup[2] = ui->imgLabel2;
     imgLabelGroup[3] = ui->imgLabel3;
     imgLabelGroup[4] = ui->imgLabel4;
+
+    latestOperateLabelGroup[0] = ui->latestOperateLabel;
+    latestOperateLabelGroup[1] = ui->latestOperateLabel1;
+    latestOperateLabelGroup[2] = ui->latestOperateLabel2;
+    latestOperateLabelGroup[3] = ui->latestOperateLabel3;
+    latestOperateLabelGroup[4] = ui->latestOperateLabel4;
 }
 //获得备注控件
 QLineEdit* MainWindow::getRemarkLineEdit(int index)
@@ -50,6 +107,11 @@ QLabel* MainWindow::getImgLabel(int index)
 {
     return (QLabel*)imgLabelGroup[index];
 }
+QLabel* MainWindow::getLatestOperateLabel(int index)
+{
+    return (QLabel*)latestOperateLabelGroup[index];
+}
+
 
 //生成二维码
 void MainWindow::encodeQRButtonClicked(int index)
@@ -64,6 +126,9 @@ void MainWindow::encodeQRButtonClicked(int index)
             int currentIndex = ui->tabWidget->currentIndex();
             ui->tabWidget->setTabText(currentIndex,remark);
         }
+        QLabel* latestOperateLabel = this->getLatestOperateLabel(index);
+        latestOperateLabel->setVisible(false);
+        latestOperateLabel->setText(QString::number(BARCODE_QRCODE));
 
         struct zint_symbol *my_symbol = ZBarcode_Create();
         if(my_symbol != NULL)  {
@@ -132,6 +197,10 @@ void MainWindow::encodeBarcodeButtonClicked(int index)
             int currentIndex = ui->tabWidget->currentIndex();
             ui->tabWidget->setTabText(currentIndex,remark);
         }
+
+        QLabel* latestOperateLabel = this->getLatestOperateLabel(index);
+        latestOperateLabel->setVisible(false);
+        latestOperateLabel->setText(QString::number(BARCODE_CODE128));
 
         struct zint_symbol *my_symbol = ZBarcode_Create();
         if(my_symbol != NULL)  {

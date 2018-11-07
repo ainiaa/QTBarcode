@@ -138,9 +138,14 @@ void MainWindow::encodeQRButtonClicked(int index)
              const char * fileNameCC =fileNameBa.data();
             strcpy_s(my_symbol->outfile,fileNameCC);
             unsigned char* ch;
-            QByteArray ba = barcode.toLatin1();
+            QByteArray ba = barcode.toUtf8();
             ch=(unsigned char *)ba.data();
-            ZBarcode_Encode(my_symbol,ch,0);
+            int errNum = ZBarcode_Encode(my_symbol,ch,ba.length());
+            if (errNum > 5)
+            {
+                QMessageBox::critical(this,"错误",my_symbol->errtxt);
+                return;
+            }
             ZBarcode_Print(my_symbol,0);
             ZBarcode_Delete(my_symbol);
             QImage* barcodeImg= new QImage();
@@ -206,20 +211,25 @@ void MainWindow::encodeBarcodeButtonClicked(int index)
 
         struct zint_symbol *my_symbol = ZBarcode_Create();
         if(my_symbol != NULL)  {
-            my_symbol->symbology= BARCODE_CODE128;
+            my_symbol->symbology= BARCODE_CODE128B;
             my_symbol->border_width = 2;
             my_symbol->scale = 2;
-            my_symbol->input_mode = DATA_MODE;
+            my_symbol->input_mode = UNICODE_MODE;
 
             QString fileName = cfg->GetConfigPath() +"output.bmp" ;
-            QByteArray fileNameBa = fileName.toLatin1();
+            QByteArray fileNameBa = fileName.toUtf8();
             const char * fileNameCC =fileNameBa.data();
             strcpy_s(my_symbol->outfile, fileNameCC);
 
             unsigned char* ch;
             QByteArray ba = barcode.toUtf8();
             ch=(unsigned char *)ba.data();
-            ZBarcode_Encode(my_symbol,ch,0);
+            int errNum = ZBarcode_Encode(my_symbol,ch,ba.length());
+            if (errNum > 5)
+            {
+                QMessageBox::critical(this,"错误",my_symbol->errtxt);
+                return;
+            }
             ZBarcode_Print(my_symbol,0); //
             ZBarcode_Delete(my_symbol);
             QImage* barcodeImg= new QImage();

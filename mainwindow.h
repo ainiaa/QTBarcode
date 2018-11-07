@@ -65,6 +65,7 @@ private:
     QWidget* imgLabelGroup[GROUP_NUM];
     QWidget* latestOperateLabelGroup[GROUP_NUM];
     Ui::MainWindow *ui;
+    Config* cfg = new Config();
 };
 
 #endif // MAINWINDOW_H

@@ -15,28 +15,27 @@ MainWindow::~MainWindow()
 {
     this->writeConfig();
     delete ui;
+    delete cfg;
 }
 
 //加载config
 void MainWindow::loadConfig()
 {
-    Config cfg;
-
     for(int i =0; i < GROUP_NUM;i++)
     {
         QString index = QString::number(i);
-        QString remark = cfg.Get(index,"remark").toString();
+        QString remark = cfg->Get(index,"remark").toString();
         if (!remark.isEmpty())
         {
             this->getRemarkLineEdit(i)->setText(remark);
             ui->tabWidget->setTabText(i,remark);
         }
 
-        QString barcode =  cfg.Get(index,"barcode").toString();
+        QString barcode =  cfg->Get(index,"barcode").toString();
         if (!barcode.isEmpty())
         {
             this->getBarcodeLineEdit(i)->setText(barcode);
-            QString latestOperate = cfg.Get(index,"latestOperate").toString();
+            QString latestOperate = cfg->Get(index,"latestOperate").toString();
             if (latestOperate == QString::number(BARCODE_QRCODE))
             {
                 this->encodeQRButtonClicked(i);
@@ -50,17 +49,15 @@ void MainWindow::loadConfig()
 //写入config
 void MainWindow::writeConfig()
 {
-    Config cfg;
-
     for(int i =0; i < GROUP_NUM;i++)
     {
         QString index = QString::number(i);
         QString remark = this->getRemarkLineEdit(i)->text();
-        cfg.Set(index,"remark",remark);
+        cfg->Set(index,"remark",remark);
         QString barcode = this->getBarcodeLineEdit(i)->text();
-        cfg.Set(index,"barcode",barcode);
+        cfg->Set(index,"barcode",barcode);
         QString latestOperate = this->getLatestOperateLabel(i)->text();
-        cfg.Set(index,"latestOperate",latestOperate);
+        cfg->Set(index,"latestOperate",latestOperate);
     }
 }
 
@@ -135,7 +132,9 @@ void MainWindow::encodeQRButtonClicked(int index)
             my_symbol->symbology= BARCODE_QRCODE;
             my_symbol->border_width = 2;
             my_symbol->scale = 3;
-            strcpy_s(my_symbol->outfile, "output.bmp");
+            QString fileName = cfg->GetConfigPath() +"output.bmp" ;
+            QByteArray fileNameBa = fileName.toLatin1();
+            strcpy_s(my_symbol->outfile, fileNameBa.data());
             unsigned char* ch;
             QByteArray ba = barcode.toLatin1();
             ch=(unsigned char *)ba.data();
@@ -208,7 +207,11 @@ void MainWindow::encodeBarcodeButtonClicked(int index)
             my_symbol->border_width = 2;
             my_symbol->scale = 5;
             my_symbol->input_mode = DATA_MODE;
-            strcpy_s(my_symbol->outfile, "output.bmp");
+
+            QString fileName = cfg->GetConfigPath() +"output.bmp" ;
+            QByteArray fileNameBa = fileName.toLatin1();
+            strcpy_s(my_symbol->outfile, fileNameBa.data());
+
             unsigned char* ch;
             QByteArray ba = barcode.toUtf8();
             ch=(unsigned char *)ba.data();

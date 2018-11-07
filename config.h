@@ -10,6 +10,7 @@ public:
     Config(QString qstrfilename = "");
     virtual ~Config(void);
     void Set(QString,QString,QVariant);
+    QString GetConfigPath();
     QVariant Get(QString,QString);
 private:
     QString m_qstrFileName;

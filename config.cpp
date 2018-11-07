@@ -7,12 +7,12 @@ Config::Config(QString qstrfilename)
 {
     if (qstrfilename.isEmpty())
     {
-        m_qstrFileName = QDir::homePath()+ "/.barcode/Config.ini";
+        m_qstrFileName = this->GetConfigPath()+ "Config.ini";
         printf("fileName:%s", m_qstrFileName.toUtf8().data());
     }
     else
     {
-        m_qstrFileName = qstrfilename;
+        m_qstrFileName = this->GetConfigPath() + qstrfilename;
     }
 
     m_psetting = new QSettings(m_qstrFileName, QSettings::IniFormat);
@@ -33,4 +33,8 @@ QVariant Config::Get(QString qstrnodename,QString qstrkeyname)
 {
     QVariant qvar = m_psetting->value(QString("/%1/%2").arg(qstrnodename).arg(qstrkeyname));
     return qvar;
+}
+QString Config::GetConfigPath()
+{
+    return QDir::homePath()+ "/.barcode/";
 }

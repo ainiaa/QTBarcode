@@ -132,7 +132,9 @@ void MainWindow::encodeQRButtonClicked(int index)
         if(my_symbol != NULL)  {
             my_symbol->symbology= BARCODE_QRCODE;
             my_symbol->border_width = 2;
-            my_symbol->scale = 3;
+           // my_symbol->whitespace_width = 10;
+            my_symbol->scale = 2;
+            strcpy(my_symbol->bgcolour,"fff0f0");
             QString fileName = cfg->GetConfigPath() +"output.bmp" ;
             QByteArray fileNameBa = fileName.toLatin1();
              const char * fileNameCC =fileNameBa.data();
@@ -140,7 +142,7 @@ void MainWindow::encodeQRButtonClicked(int index)
             unsigned char* ch;
             QByteArray ba = barcode.toUtf8();
             ch=(unsigned char *)ba.data();
-            int errNum = ZBarcode_Encode(my_symbol,ch,ba.length());
+            int errNum = ZBarcode_Encode(my_symbol,ch,0);
             if (errNum > 5)
             {
                 QMessageBox::critical(this,"错误",my_symbol->errtxt);
@@ -156,11 +158,9 @@ void MainWindow::encodeQRButtonClicked(int index)
             int width = currentImgLabel->width();
             int height = currentImgLabel->height();
             printf("label height:%d width:%d!\n",height,width);
-            int width1 = pixmap.width();
-            int height1 = pixmap.height();
-            printf("pixmap height:%d width:%d!\n",height1,width1);
-            QPixmap fitpixmap = pixmap.scaled(width, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+            QPixmap  fitpixmap = pixmap.scaled(height, height, Qt::KeepAspectRatio, Qt::SmoothTransformation);
             currentImgLabel->setPixmap(fitpixmap);
+            currentImgLabel->setAlignment(Qt::AlignCenter);
         }
     }
 }
@@ -207,14 +207,20 @@ void MainWindow::encodeBarcodeButtonClicked(int index)
 
         QLabel* latestOperateLabel = this->getLatestOperateLabel(index);
         latestOperateLabel->setVisible(false);
-        latestOperateLabel->setText(QString::number(BARCODE_CODE128));
+        latestOperateLabel->setText(QString::number(BARCODE_CODE128B));
 
         struct zint_symbol *my_symbol = ZBarcode_Create();
         if(my_symbol != NULL)  {
             my_symbol->symbology= BARCODE_CODE128B;
-            my_symbol->border_width = 2;
-            my_symbol->scale = 2;
-            my_symbol->input_mode = UNICODE_MODE;
+            my_symbol->border_width = 3;
+            my_symbol->whitespace_width = 10;
+            my_symbol->fontsize=20;
+            my_symbol->scale = 1;
+          //  strcpy(my_symbol->fgcolour,"00ff00");
+            strcpy(my_symbol->bgcolour,"fff0f0");
+            my_symbol->input_mode = DATA_MODE;
+            //my_symbol->width = 5;
+            my_symbol->height = 50;
 
             QString fileName = cfg->GetConfigPath() +"output.bmp" ;
             QByteArray fileNameBa = fileName.toUtf8();
@@ -224,13 +230,13 @@ void MainWindow::encodeBarcodeButtonClicked(int index)
             unsigned char* ch;
             QByteArray ba = barcode.toUtf8();
             ch=(unsigned char *)ba.data();
-            int errNum = ZBarcode_Encode(my_symbol,ch,ba.length());
+            int errNum = ZBarcode_Encode(my_symbol,ch,0);
             if (errNum > 5)
             {
                 QMessageBox::critical(this,"错误",my_symbol->errtxt);
                 return;
             }
-            ZBarcode_Print(my_symbol,0); //
+            ZBarcode_Print(my_symbol,0);
             ZBarcode_Delete(my_symbol);
             QImage* barcodeImg= new QImage();
             barcodeImg->load(fileName);
@@ -242,8 +248,9 @@ void MainWindow::encodeBarcodeButtonClicked(int index)
             //height = pixmap.height();
             printf("label height:%d width:%d!\n",height,width);
             int width1 = pixmap.width();
-            int height1 = 100;//pixmap.height();
+            int height1 = 240;//pixmap.height();
             printf("pixmap height:%d width:%d!\n",height1,width1);
+            //currentImgLabel->setPixmap(pixmap);
             QPixmap fitpixmap = pixmap.scaled(width, height1, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
             currentImgLabel->setPixmap(fitpixmap);
         }

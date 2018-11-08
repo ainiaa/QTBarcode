@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>559</width>
-    <height>566</height>
+    <width>802</width>
+    <height>569</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,12 +19,12 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>561</width>
-      <height>511</height>
+      <width>801</width>
+      <height>521</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -33,23 +33,23 @@
      <widget class="QLabel" name="codeLabel">
       <property name="geometry">
        <rect>
-        <x>50</x>
+        <x>133</x>
         <y>50</y>
-        <width>54</width>
+        <width>101</width>
         <height>23</height>
        </rect>
       </property>
       <property name="text">
-       <string>条码内容</string>
+       <string>条码/二维码内容</string>
       </property>
      </widget>
      <widget class="QLabel" name="imgLabel">
       <property name="geometry">
        <rect>
-        <x>60</x>
+        <x>10</x>
         <y>90</y>
-        <width>366</width>
-        <height>366</height>
+        <width>771</width>
+        <height>361</height>
        </rect>
       </property>
       <property name="text">
@@ -59,7 +59,7 @@
      <widget class="QLineEdit" name="barcodeLineEdit">
       <property name="geometry">
        <rect>
-        <x>110</x>
+        <x>240</x>
         <y>50</y>
         <width>181</width>
         <height>23</height>
@@ -69,7 +69,7 @@
      <widget class="QPushButton" name="encoderButton">
       <property name="geometry">
        <rect>
-        <x>310</x>
+        <x>440</x>
         <y>50</y>
         <width>75</width>
         <height>23</height>
@@ -82,7 +82,7 @@
      <widget class="QLabel" name="remarkLabel">
       <property name="geometry">
        <rect>
-        <x>70</x>
+        <x>200</x>
         <y>20</y>
         <width>31</width>
         <height>23</height>
@@ -95,7 +95,7 @@
      <widget class="QLineEdit" name="remarkLineEdit">
       <property name="geometry">
        <rect>
-        <x>110</x>
+        <x>240</x>
         <y>20</y>
         <width>181</width>
         <height>23</height>
@@ -105,7 +105,7 @@
      <widget class="QPushButton" name="encodeBarcodeBtn">
       <property name="geometry">
        <rect>
-        <x>400</x>
+        <x>530</x>
         <y>50</y>
         <width>75</width>
         <height>23</height>
@@ -136,20 +136,20 @@
      <widget class="QLabel" name="codeLabel1">
       <property name="geometry">
        <rect>
-        <x>50</x>
+        <x>133</x>
         <y>50</y>
-        <width>54</width>
+        <width>101</width>
         <height>23</height>
        </rect>
       </property>
       <property name="text">
-       <string>条码内容</string>
+       <string>条码/二维码内容</string>
       </property>
      </widget>
      <widget class="QLineEdit" name="barcodeLineEdit1">
       <property name="geometry">
        <rect>
-        <x>110</x>
+        <x>240</x>
         <y>50</y>
         <width>181</width>
         <height>23</height>
@@ -159,9 +159,9 @@
      <widget class="QLabel" name="imgLabel1">
       <property name="geometry">
        <rect>
-        <x>50</x>
+        <x>10</x>
         <y>90</y>
-        <width>366</width>
+        <width>771</width>
         <height>366</height>
        </rect>
       </property>
@@ -172,7 +172,7 @@
      <widget class="QPushButton" name="encoderButton1">
       <property name="geometry">
        <rect>
-        <x>310</x>
+        <x>440</x>
         <y>50</y>
         <width>75</width>
         <height>23</height>
@@ -185,7 +185,7 @@
      <widget class="QLineEdit" name="remarkLineEdit1">
       <property name="geometry">
        <rect>
-        <x>110</x>
+        <x>240</x>
         <y>20</y>
         <width>181</width>
         <height>23</height>
@@ -195,7 +195,7 @@
      <widget class="QLabel" name="remarkLabel1">
       <property name="geometry">
        <rect>
-        <x>70</x>
+        <x>200</x>
         <y>20</y>
         <width>31</width>
         <height>23</height>
@@ -208,7 +208,7 @@
      <widget class="QPushButton" name="encodeBarcodeBtn1">
       <property name="geometry">
        <rect>
-        <x>400</x>
+        <x>530</x>
         <y>50</y>
         <width>75</width>
         <height>23</height>
@@ -239,7 +239,7 @@
      <widget class="QLineEdit" name="barcodeLineEdit2">
       <property name="geometry">
        <rect>
-        <x>110</x>
+        <x>240</x>
         <y>50</y>
         <width>181</width>
         <height>23</height>
@@ -249,7 +249,7 @@
      <widget class="QLabel" name="remarkLabel2">
       <property name="geometry">
        <rect>
-        <x>70</x>
+        <x>200</x>
         <y>20</y>
         <width>31</width>
         <height>23</height>
@@ -262,22 +262,22 @@
      <widget class="QLabel" name="codeLabel2">
       <property name="geometry">
        <rect>
-        <x>50</x>
+        <x>133</x>
         <y>50</y>
-        <width>54</width>
+        <width>101</width>
         <height>23</height>
        </rect>
       </property>
       <property name="text">
-       <string>条码内容</string>
+       <string>条码/二维码内容</string>
       </property>
      </widget>
      <widget class="QLabel" name="imgLabel2">
       <property name="geometry">
        <rect>
-        <x>50</x>
+        <x>10</x>
         <y>90</y>
-        <width>366</width>
+        <width>771</width>
         <height>366</height>
        </rect>
       </property>
@@ -288,7 +288,7 @@
      <widget class="QPushButton" name="encoderButton2">
       <property name="geometry">
        <rect>
-        <x>310</x>
+        <x>440</x>
         <y>50</y>
         <width>75</width>
         <height>23</height>
@@ -301,7 +301,7 @@
      <widget class="QLineEdit" name="remarkLineEdit2">
       <property name="geometry">
        <rect>
-        <x>110</x>
+        <x>240</x>
         <y>20</y>
         <width>181</width>
         <height>23</height>
@@ -311,7 +311,7 @@
      <widget class="QPushButton" name="encodeBarcodeBtn2">
       <property name="geometry">
        <rect>
-        <x>400</x>
+        <x>530</x>
         <y>50</y>
         <width>75</width>
         <height>23</height>
@@ -342,7 +342,7 @@
      <widget class="QLineEdit" name="barcodeLineEdit3">
       <property name="geometry">
        <rect>
-        <x>110</x>
+        <x>240</x>
         <y>50</y>
         <width>181</width>
         <height>23</height>
@@ -352,7 +352,7 @@
      <widget class="QLabel" name="remarkLabel3">
       <property name="geometry">
        <rect>
-        <x>70</x>
+        <x>200</x>
         <y>20</y>
         <width>31</width>
         <height>23</height>
@@ -365,22 +365,22 @@
      <widget class="QLabel" name="codeLabel3">
       <property name="geometry">
        <rect>
-        <x>50</x>
+        <x>133</x>
         <y>50</y>
-        <width>54</width>
+        <width>101</width>
         <height>23</height>
        </rect>
       </property>
       <property name="text">
-       <string>条码内容</string>
+       <string>条码/二维码内容</string>
       </property>
      </widget>
      <widget class="QLabel" name="imgLabel3">
       <property name="geometry">
        <rect>
-        <x>50</x>
+        <x>10</x>
         <y>90</y>
-        <width>366</width>
+        <width>771</width>
         <height>366</height>
        </rect>
       </property>
@@ -391,7 +391,7 @@
      <widget class="QPushButton" name="encoderButton3">
       <property name="geometry">
        <rect>
-        <x>310</x>
+        <x>440</x>
         <y>50</y>
         <width>75</width>
         <height>23</height>
@@ -404,7 +404,7 @@
      <widget class="QLineEdit" name="remarkLineEdit3">
       <property name="geometry">
        <rect>
-        <x>110</x>
+        <x>240</x>
         <y>20</y>
         <width>181</width>
         <height>23</height>
@@ -414,7 +414,7 @@
      <widget class="QPushButton" name="encodeBarcodeBtn3">
       <property name="geometry">
        <rect>
-        <x>400</x>
+        <x>530</x>
         <y>50</y>
         <width>75</width>
         <height>23</height>
@@ -445,7 +445,7 @@
      <widget class="QLineEdit" name="barcodeLineEdit4">
       <property name="geometry">
        <rect>
-        <x>110</x>
+        <x>240</x>
         <y>50</y>
         <width>181</width>
         <height>23</height>
@@ -455,7 +455,7 @@
      <widget class="QLabel" name="remarkLabel4">
       <property name="geometry">
        <rect>
-        <x>70</x>
+        <x>200</x>
         <y>20</y>
         <width>31</width>
         <height>23</height>
@@ -468,22 +468,22 @@
      <widget class="QLabel" name="codeLabel4">
       <property name="geometry">
        <rect>
-        <x>50</x>
+        <x>133</x>
         <y>50</y>
-        <width>54</width>
+        <width>101</width>
         <height>23</height>
        </rect>
       </property>
       <property name="text">
-       <string>条码内容</string>
+       <string>条码/二维码内容</string>
       </property>
      </widget>
      <widget class="QLabel" name="imgLabel4">
       <property name="geometry">
        <rect>
-        <x>50</x>
+        <x>10</x>
         <y>90</y>
-        <width>366</width>
+        <width>771</width>
         <height>366</height>
        </rect>
       </property>
@@ -494,7 +494,7 @@
      <widget class="QPushButton" name="encoderButton4">
       <property name="geometry">
        <rect>
-        <x>310</x>
+        <x>440</x>
         <y>50</y>
         <width>75</width>
         <height>23</height>
@@ -507,7 +507,7 @@
      <widget class="QLineEdit" name="remarkLineEdit4">
       <property name="geometry">
        <rect>
-        <x>110</x>
+        <x>240</x>
         <y>20</y>
         <width>181</width>
         <height>23</height>
@@ -517,7 +517,7 @@
      <widget class="QPushButton" name="encodeBarcodeBtn4">
       <property name="geometry">
        <rect>
-        <x>400</x>
+        <x>530</x>
         <y>50</y>
         <width>75</width>
         <height>23</height>
@@ -548,7 +548,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>559</width>
+     <width>802</width>
      <height>23</height>
     </rect>
    </property>

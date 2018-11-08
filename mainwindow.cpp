@@ -131,13 +131,13 @@ void MainWindow::encodeQRButtonClicked(int index)
         struct zint_symbol *my_symbol = ZBarcode_Create();
         if(my_symbol != NULL)  {
             my_symbol->symbology= BARCODE_QRCODE;
-            my_symbol->border_width = 2;
-           // my_symbol->whitespace_width = 10;
+            my_symbol->border_width = 1;
+            my_symbol->whitespace_width = 1;
             my_symbol->scale = 2;
             strcpy(my_symbol->bgcolour,"fff0f0");
             QString fileName = cfg->GetConfigPath() +"output.bmp" ;
             QByteArray fileNameBa = fileName.toLatin1();
-             const char * fileNameCC =fileNameBa.data();
+            const char * fileNameCC =fileNameBa.data();
             strcpy_s(my_symbol->outfile,fileNameCC);
             unsigned char* ch;
             QByteArray ba = barcode.toUtf8();
@@ -161,6 +161,7 @@ void MainWindow::encodeQRButtonClicked(int index)
             QPixmap  fitpixmap = pixmap.scaled(height, height, Qt::KeepAspectRatio, Qt::SmoothTransformation);
             currentImgLabel->setPixmap(fitpixmap);
             currentImgLabel->setAlignment(Qt::AlignCenter);
+            currentImgLabel->setStyleSheet("background-color:gainsboro");
         }
     }
 }
@@ -199,28 +200,32 @@ void MainWindow::encodeBarcodeButtonClicked(int index)
         QMessageBox::information(this,"提示","请输入条形码内容");
     } else {
         QString remark = this->getRemarkLineEdit(index)->text();
-
+        int currentIndex = ui->tabWidget->currentIndex();
         if (!remark.isEmpty()) {
-            int currentIndex = ui->tabWidget->currentIndex();
+
             ui->tabWidget->setTabText(currentIndex,remark);
         }
 
         QLabel* latestOperateLabel = this->getLatestOperateLabel(index);
         latestOperateLabel->setVisible(false);
-        latestOperateLabel->setText(QString::number(BARCODE_CODE128B));
+        latestOperateLabel->setText(QString::number(BARCODE_CODE128));
 
         struct zint_symbol *my_symbol = ZBarcode_Create();
         if(my_symbol != NULL)  {
-            my_symbol->symbology= BARCODE_CODE128B;
-            my_symbol->border_width = 3;
-            my_symbol->whitespace_width = 10;
-            my_symbol->fontsize=20;
-            my_symbol->scale = 1;
-          //  strcpy(my_symbol->fgcolour,"00ff00");
-            strcpy(my_symbol->bgcolour,"fff0f0");
+            //my_symbol->eci = 26; //utf-8
+            //string text = "dddddaaa";
+            //memcpy(my_symbol->text, &text[0], text.size());
+            my_symbol->output_options = BOLD_TEXT;
+            my_symbol->symbology= BARCODE_CODE128;
+            my_symbol->border_width = 1;
+            my_symbol->whitespace_width = 2;
+            //my_symbol->fontsize=2;
+            my_symbol->scale = 3;
+            strcpy(my_symbol->fgcolour,"000000");//2F4F4F
+            strcpy(my_symbol->bgcolour,"FFFFFF");
             my_symbol->input_mode = DATA_MODE;
             //my_symbol->width = 5;
-            my_symbol->height = 50;
+            my_symbol->height = 40;
 
             QString fileName = cfg->GetConfigPath() +"output.bmp" ;
             QByteArray fileNameBa = fileName.toUtf8();
@@ -247,12 +252,15 @@ void MainWindow::encodeBarcodeButtonClicked(int index)
             int height = currentImgLabel->height();
             //height = pixmap.height();
             printf("label height:%d width:%d!\n",height,width);
-            int width1 = pixmap.width();
-            int height1 = 240;//pixmap.height();
-            printf("pixmap height:%d width:%d!\n",height1,width1);
+            int width1 = 429;
+            int height1 = 180;//pixmap.height();
+            //printf("pixmap height:%d width:%d!\n",height1,width1);
             //currentImgLabel->setPixmap(pixmap);
-            QPixmap fitpixmap = pixmap.scaled(width, height1, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+            QPixmap fitpixmap = pixmap.scaled(width1, height1, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
             currentImgLabel->setPixmap(fitpixmap);
+            currentImgLabel->setAlignment(Qt::AlignCenter);
+            //ui->tabWidget->setStyleSheet("background-color:gainsboro");//gainsboro  silver ghostwhite
+            currentImgLabel->setStyleSheet("background-color:gainsboro");
         }
     }
 }

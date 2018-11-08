@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>802</width>
-    <height>569</height>
+    <width>713</width>
+    <height>525</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,9 +19,15 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>801</width>
-      <height>521</height>
+      <width>711</width>
+      <height>481</height>
      </rect>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
     </property>
     <property name="currentIndex">
      <number>0</number>
@@ -46,9 +52,9 @@
      <widget class="QLabel" name="imgLabel">
       <property name="geometry">
        <rect>
-        <x>10</x>
+        <x>15</x>
         <y>90</y>
-        <width>771</width>
+        <width>671</width>
         <height>361</height>
        </rect>
       </property>
@@ -548,7 +554,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>802</width>
+     <width>713</width>
      <height>23</height>
     </rect>
    </property>

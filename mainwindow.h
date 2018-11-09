@@ -12,7 +12,7 @@
 #include <QDir>
 #include <zint/backend/zint.h>
 #include <config.h>
-#include <cstdio>
+#include <QHBoxLayout>
 #include <QList>
 
 namespace Ui {
@@ -37,6 +37,7 @@ protected:
     QLabel* getLatestOperateLabel(int index);
     void loadConfig();
     void writeConfig();
+    void creatBtn();
 
 
 private slots:
@@ -59,6 +60,7 @@ private slots:
     void on_encodeBarcodeBtn2_clicked();
 
     void on_encodeBarcodeBtn1_clicked();
+    void addNewTabPage();
 
 private:
     static const int GROUP_NUM = 5;
@@ -70,5 +72,22 @@ private:
     Ui::MainWindow *ui;
     Config* cfg = new Config();
 };
+
+
+class EncoderTab : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit EncoderTab(QWidget *parent = 0);
+public:
+    QPushButton  *qrEncoderBtn;
+    QPushButton  *barcodeEncoderBtn;
+
+    private slots:
+    void on_qrEncoderBtn_clicked();
+    void on_barcodeEncoderBtn_clicked();
+};
+
 
 #endif // MAINWINDOW_H

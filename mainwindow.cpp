@@ -1,7 +1,6 @@
 ﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -9,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     groupCompent();
     loadConfig();
+    creatBtn();
     setFixedSize(this->width(), this->height());
 }
 
@@ -17,7 +17,35 @@ MainWindow::~MainWindow()
     this->writeConfig();
     delete ui;
     delete cfg;
+
+    qDeleteAll(*remarkLineEditList);
+    remarkLineEditList->clear();
+
+    qDeleteAll(*barcodeLineEditList);
+    barcodeLineEditList->clear();
+
+    qDeleteAll(*imgLabelList);
+    imgLabelList->clear();
+
+    qDeleteAll(*latestOperateLabelList);
+    latestOperateLabelList->clear();
 }
+
+// 为tabwidget添加按钮
+void MainWindow::creatBtn()
+{
+    QPushButton *addBtn = new QPushButton(tr("添加"));
+    QWidget *cornerWidget = new QWidget;
+    QHBoxLayout *hlayout = new QHBoxLayout;
+    addBtn->setStyleSheet("height:20ex");
+
+    hlayout->addWidget(addBtn);
+    cornerWidget->setLayout(hlayout);
+    ui->tabWidget->setCornerWidget(cornerWidget,Qt::TopRightCorner);
+
+    connect(addBtn,SIGNAL(clicked()), this,SLOT(addNewTabPage()));
+}
+
 
 //加载config
 void MainWindow::loadConfig()
@@ -110,7 +138,6 @@ QLabel* MainWindow::getLatestOperateLabel(int index)
 {
     return latestOperateLabelList->at(index);
 }
-
 
 //生成二维码
 void MainWindow::encodeQRButtonClicked(int index)
@@ -266,6 +293,8 @@ void MainWindow::encodeBarcodeButtonClicked(const int index)
     }
 }
 
+
+
 void MainWindow::on_encoderButton_clicked()
 {
     encodeQRButtonClicked(0);
@@ -314,4 +343,15 @@ void MainWindow::on_encodeBarcodeBtn2_clicked()
 void MainWindow::on_encodeBarcodeBtn1_clicked()
 {
     encodeBarcodeButtonClicked(1);
+}
+
+void MainWindow::addNewTabPage()
+{
+    ui->tabWidget->addTab(this,"new tab");
+}
+
+EncoderTab::EncoderTab(QWidget *parent)
+{
+     QWidget* newTab = new QWidget();
+     newTab
 }

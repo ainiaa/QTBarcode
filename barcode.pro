@@ -113,3 +113,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 
 RC_FILE = barcode.rc
+
+RESOURCES += \
+    resource.qrc

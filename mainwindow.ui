@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>713</width>
+    <width>711</width>
     <height>525</height>
    </rect>
   </property>
@@ -29,8 +29,11 @@
     <property name="autoFillBackground">
      <bool>true</bool>
     </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>4</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -167,7 +170,7 @@
        <rect>
         <x>10</x>
         <y>90</y>
-        <width>771</width>
+        <width>671</width>
         <height>366</height>
        </rect>
       </property>
@@ -283,7 +286,7 @@
        <rect>
         <x>10</x>
         <y>90</y>
-        <width>771</width>
+        <width>671</width>
         <height>366</height>
        </rect>
       </property>
@@ -386,7 +389,7 @@
        <rect>
         <x>10</x>
         <y>90</y>
-        <width>771</width>
+        <width>671</width>
         <height>366</height>
        </rect>
       </property>
@@ -489,7 +492,7 @@
        <rect>
         <x>10</x>
         <y>90</y>
-        <width>771</width>
+        <width>671</width>
         <height>366</height>
        </rect>
       </property>
@@ -554,7 +557,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>713</width>
+     <width>711</width>
      <height>23</height>
     </rect>
    </property>

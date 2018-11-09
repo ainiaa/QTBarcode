@@ -66,48 +66,49 @@ void MainWindow::writeConfig()
 
 void MainWindow::groupCompent()
 {
-    remarkLineEditGroup[0] = ui->remarkLineEdit;
-    remarkLineEditGroup[1] = ui->remarkLineEdit1;
-    remarkLineEditGroup[2] = ui->remarkLineEdit2;
-    remarkLineEditGroup[3] = ui->remarkLineEdit3;
-    remarkLineEditGroup[4] = ui->remarkLineEdit4;
+    remarkLineEditList->append(ui->remarkLineEdit);
+    remarkLineEditList->append(ui->remarkLineEdit1);
+    remarkLineEditList->append(ui->remarkLineEdit2);
+    remarkLineEditList->append(ui->remarkLineEdit3);
+    remarkLineEditList->append(ui->remarkLineEdit4);
 
-    barcodeLineEditGroup[0] = ui->barcodeLineEdit;
-    barcodeLineEditGroup[1] = ui->barcodeLineEdit1;
-    barcodeLineEditGroup[2] = ui->barcodeLineEdit2;
-    barcodeLineEditGroup[3] = ui->barcodeLineEdit3;
-    barcodeLineEditGroup[4] = ui->barcodeLineEdit4;
+    barcodeLineEditList->append(ui->barcodeLineEdit);
+    barcodeLineEditList->append(ui->barcodeLineEdit1);
+    barcodeLineEditList->append(ui->barcodeLineEdit2);
+    barcodeLineEditList->append(ui->barcodeLineEdit3);
+    barcodeLineEditList->append(ui->barcodeLineEdit4);
 
-    imgLabelGroup[0] = ui->imgLabel;
-    imgLabelGroup[1] = ui->imgLabel1;
-    imgLabelGroup[2] = ui->imgLabel2;
-    imgLabelGroup[3] = ui->imgLabel3;
-    imgLabelGroup[4] = ui->imgLabel4;
+    imgLabelList->append(ui->imgLabel);
+    imgLabelList->append(ui->imgLabel1);
+    imgLabelList->append(ui->imgLabel2);
+    imgLabelList->append(ui->imgLabel3);
+    imgLabelList->append(ui->imgLabel4);
 
-    latestOperateLabelGroup[0] = ui->latestOperateLabel;
-    latestOperateLabelGroup[1] = ui->latestOperateLabel1;
-    latestOperateLabelGroup[2] = ui->latestOperateLabel2;
-    latestOperateLabelGroup[3] = ui->latestOperateLabel3;
-    latestOperateLabelGroup[4] = ui->latestOperateLabel4;
+    latestOperateLabelList->append(ui->latestOperateLabel);
+    latestOperateLabelList->append(ui->latestOperateLabel1);
+    latestOperateLabelList->append(ui->latestOperateLabel2);
+    latestOperateLabelList->append(ui->latestOperateLabel3);
+    latestOperateLabelList->append(ui->latestOperateLabel4);
+
 }
 //获得备注控件
 QLineEdit* MainWindow::getRemarkLineEdit(int index)
 {
-    return (QLineEdit*)remarkLineEditGroup[index];
+    return remarkLineEditList->at(index);
 }
 //获得条码控件
 QLineEdit* MainWindow::getBarcodeLineEdit(int index)
 {
-    return (QLineEdit*)barcodeLineEditGroup[index];
+    return barcodeLineEditList->at(index);
 }
 //获得img展示容器
 QLabel* MainWindow::getImgLabel(int index)
 {
-    return (QLabel*)imgLabelGroup[index];
+    return imgLabelList->at(index);
 }
 QLabel* MainWindow::getLatestOperateLabel(int index)
 {
-    return (QLabel*)latestOperateLabelGroup[index];
+    return latestOperateLabelList->at(index);
 }
 
 
@@ -193,7 +194,7 @@ std::string UTF82GBK(std::string &str)
 }
 
 //生成条码
-void MainWindow::encodeBarcodeButtonClicked(int index)
+void MainWindow::encodeBarcodeButtonClicked(const int index)
 {
     QString barcode = this->getBarcodeLineEdit(index)->text();
     if (barcode.isEmpty()) {

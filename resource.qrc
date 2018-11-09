@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/image/tab">
+        <file alias="addbtn.png">resource/images/tab/addbtn.png</file>
+        <file alias="grayleftbtn">resource/images/tab/grayleftbtn.png</file>
+        <file alias="grayrightbtn">resource/images/tab/grayrightbtn.png</file>
+        <file alias="hoverleftbtn.png">resource/images/tab/hoverleftbtn.png</file>
+        <file alias="hoverrightbtn.png">resource/images/tab/hoverrightbtn.png</file>
+        <file alias="leftbtn.png">resource/images/tab/leftbtn.png</file>
+        <file alias="rightbtn.png">resource/images/tab/rightbtn.png</file>
+    </qresource>
+</RCC>

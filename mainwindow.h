@@ -12,7 +12,8 @@
 #include <QDir>
 #include <zint/backend/zint.h>
 #include <config.h>
-#include<cstdio>
+#include <cstdio>
+#include <QList>
 
 namespace Ui {
 class MainWindow;
@@ -61,10 +62,11 @@ private slots:
 
 private:
     static const int GROUP_NUM = 5;
-    QWidget* remarkLineEditGroup[GROUP_NUM];
-    QWidget* barcodeLineEditGroup[GROUP_NUM];
-    QWidget* imgLabelGroup[GROUP_NUM];
-    QWidget* latestOperateLabelGroup[GROUP_NUM];
+    QList<QLineEdit*>* remarkLineEditList = new  QList<QLineEdit*>();
+    QList<QLineEdit*>* barcodeLineEditList = new  QList<QLineEdit*>();
+    QList<QLabel*>*  imgLabelList = new  QList<QLabel*>();
+    QList<QLabel*>*  latestOperateLabelList = new  QList<QLabel*>();
+
     Ui::MainWindow *ui;
     Config* cfg = new Config();
 };

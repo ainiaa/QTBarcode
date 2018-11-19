@@ -11,9 +11,10 @@
 #include <QSettings>
 #include <QDir>
 #include <zint/backend/zint.h>
-#include <config.h>
 #include <QHBoxLayout>
 #include <QList>
+#include <config.h>
+#include <coderform.h>
 
 namespace Ui {
 class MainWindow;
@@ -72,22 +73,4 @@ private:
     Ui::MainWindow *ui;
     Config* cfg = new Config();
 };
-
-
-class EncoderTab : public QWidget
-{
-    Q_OBJECT
-
-public:
-    explicit EncoderTab(QWidget *parent = 0);
-public:
-    QPushButton  *qrEncoderBtn;
-    QPushButton  *barcodeEncoderBtn;
-
-    private slots:
-    void on_qrEncoderBtn_clicked();
-    void on_barcodeEncoderBtn_clicked();
-};
-
-
 #endif // MAINWINDOW_H

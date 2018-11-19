@@ -76,7 +76,8 @@ SOURCES += \
         zint/backend/png.c \
         main.cpp \
         mainwindow.cpp \
-    config.cpp
+        config.cpp \
+    coderform.cpp
 
 HEADERS += \
         zint/backend/aztec.h \
@@ -101,7 +102,8 @@ HEADERS += \
         zint/backend/zint.h \
         zint/backend_qt/qzint.h \
         mainwindow.h \
-        config.h
+        config.h \
+    coderform.h
 
 FORMS += \
         mainwindow.ui

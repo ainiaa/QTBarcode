@@ -347,11 +347,6 @@ void MainWindow::on_encodeBarcodeBtn1_clicked()
 
 void MainWindow::addNewTabPage()
 {
-    ui->tabWidget->addTab(this,"new tab");
-}
-
-EncoderTab::EncoderTab(QWidget *parent)
-{
-     QWidget* newTab = new QWidget();
-     newTab
+   QWidget * tab = new CoderForm(nullptr,cfg);
+    ui->tabWidget->addTab(tab,"new tab " +((CoderForm*) tab)->getId());
 }

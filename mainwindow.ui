@@ -127,7 +127,7 @@
      <widget class="QLabel" name="latestOperateLabel">
       <property name="geometry">
        <rect>
-        <x>310</x>
+        <x>440</x>
         <y>20</y>
         <width>61</width>
         <height>21</height>

@@ -5,7 +5,7 @@
 
 int CoderForm::maxNum =0;
 
-CoderForm::CoderForm(QWidget *parent,Config* cfg) :
+CoderForm::CoderForm(QWidget *parent, Config * cfg) :
     QWidget(parent)
 {
     this->cfg = cfg;
@@ -102,6 +102,8 @@ void CoderForm::on_encoderButton_clicked()
             imgLabel->setPixmap(fitpixmap);
             imgLabel->setAlignment(Qt::AlignCenter);
             imgLabel->setStyleSheet("background-color:gainsboro");
+
+             emit sendData(remark);  //获取lineEdit的输入并且传递出去
         }
     }
 }
@@ -168,6 +170,8 @@ void CoderForm::on_encodeBarcodeBtn_clicked()
             imgLabel->setAlignment(Qt::AlignCenter);
             //ui->tabWidget->setStyleSheet("background-color:gainsboro");//gainsboro  silver ghostwhite
             imgLabel->setStyleSheet("background-color:gainsboro");
+
+            emit sendData(remark);  //获取lineEdit的输入并且传递出去
         }
     }
 }

@@ -46,6 +46,13 @@ void MainWindow::creatBtn()
     connect(addBtn,SIGNAL(clicked()), this,SLOT(addNewTabPage()));
 }
 
+void MainWindow::receiveData(QString data)
+{
+    int currentIndex = ui->tabWidget->currentIndex();
+    ui->tabWidget->setTabText(currentIndex,data); //获取传递过来的数据
+}
+
+
 
 //加载config
 void MainWindow::loadConfig()
@@ -349,4 +356,5 @@ void MainWindow::addNewTabPage()
 {
    QWidget * tab = new CoderForm(nullptr,cfg);
     ui->tabWidget->addTab(tab,"new tab " +((CoderForm*) tab)->getId());
+    connect(tab, SIGNAL(sendData(QString)), this, SLOT(receiveData(QString)));
 }

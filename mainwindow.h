@@ -63,6 +63,8 @@ private slots:
     void on_encodeBarcodeBtn1_clicked();
     void addNewTabPage();
 
+    void receiveData(QString data);   //接收传递过来的数据的槽
+
 private:
     static const int GROUP_NUM = 5;
     QList<QLineEdit*>* remarkLineEditList = new  QList<QLineEdit*>();

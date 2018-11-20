@@ -1,7 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-
 #include <QMainWindow>
 #include <QMessageBox>
 #include <QtWidgets/QWidget>
@@ -12,6 +11,7 @@
 #include <QDir>
 #include <zint/backend/zint.h>
 #include <QHBoxLayout>
+#include<QResizeEvent>
 #include <QList>
 #include <config.h>
 #include <coderform.h>
@@ -32,6 +32,7 @@ protected:
     void groupCompent();
     void encodeQRButtonClicked(int index);
     void encodeBarcodeButtonClicked(int index);
+    virtual void resizeEvent(QResizeEvent *event);
     QLineEdit* getRemarkLineEdit(int index);
     QLineEdit* getBarcodeLineEdit(int index);
     QLabel* getImgLabel(int index);

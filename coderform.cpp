@@ -11,14 +11,14 @@ CoderForm::CoderForm(QWidget *parent, Config * cfg) :
     this->cfg = cfg;
     id = QString::number(++CoderForm::maxNum);
     this->setObjectName("CoderForm"+id);
-    this->resize(711, 481);
+   // this->resize(711, 481);
 
     codeLabel = new QLabel(this);
     codeLabel->setObjectName("codeLabel"+id);
     codeLabel->setGeometry(QRect(133, 50, 101, 23));
     imgLabel = new QLabel(this);
     imgLabel->setObjectName("imgLabel"+id);
-    imgLabel->setGeometry(QRect(10, 90, 671, 361));
+    imgLabel->setGeometry(QRect(10, 90, 911, 361));
     imgLabel->setStyleSheet("background-color:gainsboro");
     barcodeLineEdit = new QLineEdit(this);
     barcodeLineEdit->setObjectName("barcodeLineEdit"+id);

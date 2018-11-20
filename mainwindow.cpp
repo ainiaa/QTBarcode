@@ -8,10 +8,24 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     groupCompent();
     loadConfig();
-    creatBtn();
+
+    //新增
+   creatBtn();
     //关闭tab
     connect(ui->tabWidget,SIGNAL(tabCloseRequested(int)),this,SLOT(removeSubTab(int)));
     setFixedSize(this->width(), this->height());
+}
+
+void MainWindow::resizeEvent(QResizeEvent* event)
+{
+    const static QString oldStyle = ui->tabWidget->styleSheet();
+
+   QMainWindow::resizeEvent(event);
+   QString style("%1;QTabWidget::QTabBar{width:%2px}");
+
+   QString realStyle = style.arg(oldStyle).arg(this->width());
+   //QMessageBox::information(this,"提示",realStyle);
+  // ui->tabWidget->setStyleSheet(realStyle);
 }
 
 //关闭tab

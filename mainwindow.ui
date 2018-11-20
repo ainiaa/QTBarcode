@@ -10,8 +10,28 @@
     <height>525</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="font">
+   <font>
+    <family>Microsoft YaHei UI</family>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>条码/二维码生成工具</string>
+  </property>
+  <property name="documentMode">
+   <bool>true</bool>
+  </property>
+  <property name="tabShape">
+   <enum>QTabWidget::Rounded</enum>
+  </property>
+  <property name="dockOptions">
+   <set>QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks</set>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QTabWidget" name="tabWidget">
@@ -23,6 +43,12 @@
       <height>481</height>
      </rect>
     </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
     <property name="focusPolicy">
      <enum>Qt::NoFocus</enum>
     </property>
@@ -30,7 +56,8 @@
      <bool>true</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">QTabBar::tab{min-width:30ex; min-height:15ex;QTabBar::tab{width:600ex}}</string>
+     <string notr="true">QTabBar::tab{min-width:30ex; min-height:15ex;}
+QTabWidget::tab-bar{alignment:center;width:550px;}</string>
     </property>
     <property name="currentIndex">
      <number>4</number>

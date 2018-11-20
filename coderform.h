@@ -19,6 +19,8 @@ public:
     ~CoderForm();
     static int maxNum;
     QString getId();
+    QString getRemark();
+    QString getBarcode();
 
 signals:
     void sendData(QString );//信号，用来向父窗体传值

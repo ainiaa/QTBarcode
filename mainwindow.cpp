@@ -9,7 +9,15 @@ MainWindow::MainWindow(QWidget *parent) :
     groupCompent();
     loadConfig();
     creatBtn();
+    //关闭tab
+    connect(ui->tabWidget,SIGNAL(tabCloseRequested(int)),this,SLOT(removeSubTab(int)));
     setFixedSize(this->width(), this->height());
+}
+
+//关闭tab
+void MainWindow::removeSubTab(int index)
+{
+    ui->tabWidget->removeTab(index);
 }
 
 MainWindow::~MainWindow()
@@ -85,6 +93,7 @@ void MainWindow::loadConfig()
 //写入config
 void MainWindow::writeConfig()
 {
+    int cnt = ui->tabWidget->count();
     for(int i =0; i < GROUP_NUM;i++)
     {
         QString index = QString::number(i);
@@ -201,32 +210,6 @@ void MainWindow::encodeQRButtonClicked(int index)
     }
 }
 
-QString GBK2UTF8(const QString &str)
-{
-    QTextCodec *utf8 = QTextCodec::codecForName("UTF-8");
-    return utf8->toUnicode(str.toUtf8());
-}
-
-QString UTF82GBK(const QString &str)
-{
-    QTextCodec *gbk = QTextCodec::codecForName("GB18030");
-    return gbk->toUnicode(str.toLocal8Bit());
-}
-
-std::string GBK2UTF8(std::string &str)
-{
-    QString temp = QString::fromLocal8Bit(str.c_str());
-    std::string ret = temp.toUtf8().data();
-    return ret;
-}
-
-std::string UTF82GBK(std::string &str)
-{
-    QString temp = QString::fromUtf8(str.c_str());
-    std::string ret = temp.toLocal8Bit().data();
-    return ret;
-}
-
 //生成条码
 void MainWindow::encodeBarcodeButtonClicked(const int index)
 {
@@ -300,8 +283,6 @@ void MainWindow::encodeBarcodeButtonClicked(const int index)
     }
 }
 
-
-
 void MainWindow::on_encoderButton_clicked()
 {
     encodeQRButtonClicked(0);
@@ -356,5 +337,8 @@ void MainWindow::addNewTabPage()
 {
    QWidget * tab = new CoderForm(nullptr,cfg);
     ui->tabWidget->addTab(tab,"new tab " +((CoderForm*) tab)->getId());
+
+    ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);//新增设置为当前tab页
+
     connect(tab, SIGNAL(sendData(QString)), this, SLOT(receiveData(QString)));
 }

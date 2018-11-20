@@ -57,6 +57,16 @@ QString CoderForm::getId()
 {
     return id;
 }
+
+QString CoderForm::getRemark()
+{
+    return remarkLineEdit->text();
+}
+QString CoderForm::getBarcode()
+{
+    return barcodeLineEdit->text();
+}
+
 void CoderForm::on_encoderButton_clicked()
 {
     QString barcode = barcodeLineEdit->text();
@@ -103,7 +113,7 @@ void CoderForm::on_encoderButton_clicked()
             imgLabel->setAlignment(Qt::AlignCenter);
             imgLabel->setStyleSheet("background-color:gainsboro");
 
-             emit sendData(remark);  //获取lineEdit的输入并且传递出去
+            emit sendData(remark);  //获取lineEdit的输入并且传递出去
         }
     }
 }

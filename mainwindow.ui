@@ -30,10 +30,16 @@
      <bool>true</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">QTabBar::tab{min-width:30ex; min-height:15ex}</string>
+     <string notr="true">QTabBar::tab{min-width:30ex; min-height:15ex;QTabBar::tab{width:600ex}}</string>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>4</number>
+    </property>
+    <property name="documentMode">
+     <bool>true</bool>
+    </property>
+    <property name="tabsClosable">
+     <bool>true</bool>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">

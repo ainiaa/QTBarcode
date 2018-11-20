@@ -62,6 +62,7 @@ private slots:
 
     void on_encodeBarcodeBtn1_clicked();
     void addNewTabPage();
+    void removeSubTab(int);
 
     void receiveData(QString data);   //接收传递过来的数据的槽
 

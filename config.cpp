@@ -31,6 +31,13 @@ QVariant Config::Get(QString qstrnodename,QString qstrkeyname)
     QVariant qvar = m_psetting->value(QString("/%1/%2").arg(qstrnodename).arg(qstrkeyname));
     return qvar;
 }
+
+int Config::GetMaxNum()
+{
+    QVariant qvar = m_psetting->value("/init/max_num");
+    return qvar.toInt();
+}
+
 QString Config::GetConfigPath()
 {
     return QDir::homePath()+ "/.barcode/";

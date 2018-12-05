@@ -1,6 +1,8 @@
 ﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+int MainWindow::tabNum = 0;
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -10,22 +12,33 @@ MainWindow::MainWindow(QWidget *parent) :
     loadConfig();
 
     //新增
-   creatBtn();
+    creatBtn();
     //关闭tab
     connect(ui->tabWidget,SIGNAL(tabCloseRequested(int)),this,SLOT(removeSubTab(int)));
-    setFixedSize(this->width(), this->height());
+    //setFixedSize(this->width(), this->height());
+}
+
+void MainWindow::groupCompent()
+{
+    remarkLineEditList->append(ui->remarkLineEdit);
+    barcodeLineEditList->append(ui->barcodeLineEdit);
+    imgLabelList->append(ui->imgLabel);
+    latestOperateLabelList->append(ui->latestOperateLabel);
 }
 
 void MainWindow::resizeEvent(QResizeEvent* event)
 {
     const static QString oldStyle = ui->tabWidget->styleSheet();
 
-   QMainWindow::resizeEvent(event);
-   QString style("%1;QTabWidget::QTabBar{width:%2px}");
+    QMainWindow::resizeEvent(event);
 
-   QString realStyle = style.arg(oldStyle).arg(this->width());
-   //QMessageBox::information(this,"提示",realStyle);
-  // ui->tabWidget->setStyleSheet(realStyle);
+    QString style("%1;QTabWidget::tab-bar{width:%2px}");
+
+    QString realStyle = style.arg(oldStyle).arg(this->width());
+    //QMessageBox::information(this,"提示",realStyle);
+    ui->tabWidget->setStyleSheet(realStyle);
+    QString realStyle2 =ui->tabWidget->styleSheet();
+    //QMessageBox::information(this,"提示2",realStyle2);
 }
 
 //关闭tab
@@ -59,7 +72,7 @@ void MainWindow::creatBtn()
     QPushButton *addBtn = new QPushButton(tr("添加"));
     QWidget *cornerWidget = new QWidget;
     QHBoxLayout *hlayout = new QHBoxLayout;
-    addBtn->setStyleSheet("height:20ex");
+    addBtn->setStyleSheet("height:20ex;");
 
     hlayout->addWidget(addBtn);
     cornerWidget->setLayout(hlayout);
@@ -75,11 +88,19 @@ void MainWindow::receiveData(QString data)
 }
 
 
-
 //加载config
 void MainWindow::loadConfig()
 {
-    for(int i =0; i < GROUP_NUM;i++)
+    int max = cfg->GetMaxNum();
+    int i;
+    if(max > 1)
+    {
+        for (i =0; i < max-1;i++)
+        {
+            MainWindow::cloneTabPage();
+        }
+    }
+    for(i =0; i < max;i++)
     {
         QString index = QString::number(i);
         QString remark = cfg->Get(index,"remark").toString();
@@ -108,7 +129,8 @@ void MainWindow::loadConfig()
 void MainWindow::writeConfig()
 {
     int cnt = ui->tabWidget->count();
-    for(int i =0; i < GROUP_NUM;i++)
+    cfg->Set("init","max_num",cnt);
+    for(int i =0; i < cnt;i++)
     {
         QString index = QString::number(i);
         QString remark = this->getRemarkLineEdit(i)->text();
@@ -118,55 +140,6 @@ void MainWindow::writeConfig()
         QString latestOperate = this->getLatestOperateLabel(i)->text();
         cfg->Set(index,"latestOperate",latestOperate);
     }
-}
-
-
-
-void MainWindow::groupCompent()
-{
-    remarkLineEditList->append(ui->remarkLineEdit);
-    remarkLineEditList->append(ui->remarkLineEdit1);
-    remarkLineEditList->append(ui->remarkLineEdit2);
-    remarkLineEditList->append(ui->remarkLineEdit3);
-    remarkLineEditList->append(ui->remarkLineEdit4);
-
-    barcodeLineEditList->append(ui->barcodeLineEdit);
-    barcodeLineEditList->append(ui->barcodeLineEdit1);
-    barcodeLineEditList->append(ui->barcodeLineEdit2);
-    barcodeLineEditList->append(ui->barcodeLineEdit3);
-    barcodeLineEditList->append(ui->barcodeLineEdit4);
-
-    imgLabelList->append(ui->imgLabel);
-    imgLabelList->append(ui->imgLabel1);
-    imgLabelList->append(ui->imgLabel2);
-    imgLabelList->append(ui->imgLabel3);
-    imgLabelList->append(ui->imgLabel4);
-
-    latestOperateLabelList->append(ui->latestOperateLabel);
-    latestOperateLabelList->append(ui->latestOperateLabel1);
-    latestOperateLabelList->append(ui->latestOperateLabel2);
-    latestOperateLabelList->append(ui->latestOperateLabel3);
-    latestOperateLabelList->append(ui->latestOperateLabel4);
-
-}
-//获得备注控件
-QLineEdit* MainWindow::getRemarkLineEdit(int index)
-{
-    return remarkLineEditList->at(index);
-}
-//获得条码控件
-QLineEdit* MainWindow::getBarcodeLineEdit(int index)
-{
-    return barcodeLineEditList->at(index);
-}
-//获得img展示容器
-QLabel* MainWindow::getImgLabel(int index)
-{
-    return imgLabelList->at(index);
-}
-QLabel* MainWindow::getLatestOperateLabel(int index)
-{
-    return latestOperateLabelList->at(index);
 }
 
 //生成二维码
@@ -283,7 +256,7 @@ void MainWindow::encodeBarcodeButtonClicked(const int index)
             int width = currentImgLabel->width();
             int height = currentImgLabel->height();
             //height = pixmap.height();
-            printf("label height:%d width:%d!\n",height,width);
+            //printf("label height:%d width:%d!\n",height,width);
             int width1 = 429;
             int height1 = 180;//pixmap.height();
             //printf("pixmap height:%d width:%d!\n",height1,width1);
@@ -297,62 +270,143 @@ void MainWindow::encodeBarcodeButtonClicked(const int index)
     }
 }
 
-void MainWindow::on_encoderButton_clicked()
-{
-    encodeQRButtonClicked(0);
-}
-
-void MainWindow::on_encoderButton1_clicked()
-{
-    encodeQRButtonClicked(1);
-}
-
-void MainWindow::on_encoderButton2_clicked()
-{
-    encodeQRButtonClicked(2);
-}
-
-void MainWindow::on_encoderButton3_clicked()
-{
-    encodeQRButtonClicked(3);
-}
-
-void MainWindow::on_encoderButton4_clicked()
-{
-    encodeQRButtonClicked(4);
-}
-
-void MainWindow::on_encodeBarcodeBtn_clicked()
-{
-    encodeBarcodeButtonClicked(0);
-}
-
-void MainWindow::on_encodeBarcodeBtn4_clicked()
-{
-    encodeBarcodeButtonClicked(4);
-}
-
-void MainWindow::on_encodeBarcodeBtn3_clicked()
-{
-    encodeBarcodeButtonClicked(3);
-}
-
-void MainWindow::on_encodeBarcodeBtn2_clicked()
-{
-    encodeBarcodeButtonClicked(2);
-}
-
-void MainWindow::on_encodeBarcodeBtn1_clicked()
-{
-    encodeBarcodeButtonClicked(1);
-}
-
 void MainWindow::addNewTabPage()
 {
-   QWidget * tab = new CoderForm(nullptr,cfg);
+    MainWindow::cloneTabPage();
+    return;
+    QWidget * tab = new CoderForm(nullptr,cfg);
     ui->tabWidget->addTab(tab,"new tab " +((CoderForm*) tab)->getId());
 
     ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);//新增设置为当前tab页
 
     connect(tab, SIGNAL(sendData(QString)), this, SLOT(receiveData(QString)));
+}
+
+//获得备注控件
+QLineEdit* MainWindow::getRemarkLineEdit(int index)
+{
+    return remarkLineEditList->at(index);
+}
+//获得条码控件
+QLineEdit* MainWindow::getBarcodeLineEdit(int index)
+{
+    return barcodeLineEditList->at(index);
+}
+//获得img展示容器
+QLabel* MainWindow::getImgLabel(int index)
+{
+    return imgLabelList->at(index);
+}
+QLabel* MainWindow::getLatestOperateLabel(int index)
+{
+    return latestOperateLabelList->at(index);
+}
+
+//复制  tabPage 内容
+void MainWindow::cloneTabPage()
+{
+    QString  id = QString::number(++MainWindow::tabNum);
+    QWidget *tab = new QWidget();
+    tab->setObjectName("tab_"+id);
+
+    QLabel *codeLabel = new QLabel(tab);
+    QLabel *imgLabel = new QLabel(tab);
+    QLineEdit *barcodeLineEdit = new QLineEdit(tab);
+    QLabel *remarkLabel = new QLabel(tab) ;
+    QLineEdit *remarkLineEdit = new QLineEdit(tab) ;
+    QLabel *latestOperateLabel= new QLabel(tab);
+    QPushButton *encoderButton = new QPushButton(tab);
+    QPushButton *encodeBarcodeBtn=new QPushButton(tab);
+
+    codeLabel->setObjectName("codeLabel_"+id);
+    codeLabel->setText(ui->codeLabel->text());
+    codeLabel->setGeometry(ui->codeLabel->geometry());
+    codeLabel->setAlignment(ui->codeLabel->alignment());
+    codeLabel->setStyleSheet(ui->codeLabel->styleSheet());
+
+    remarkLineEditList->append(remarkLineEdit);
+    barcodeLineEditList->append(barcodeLineEdit);
+    imgLabelList->append(imgLabel);
+    latestOperateLabelList->append(latestOperateLabel);
+
+    imgLabel->setObjectName("imgLabel_"+id);
+    imgLabel->setText(ui->imgLabel->text());
+    imgLabel->setGeometry(ui->imgLabel->geometry());
+    imgLabel->setAlignment(ui->imgLabel->alignment());
+    imgLabel->setStyleSheet(ui->imgLabel->styleSheet());
+
+    barcodeLineEdit->setObjectName("barcodeLineEdit_"+id);
+    barcodeLineEdit->setText(ui->barcodeLineEdit->text());
+    barcodeLineEdit->setGeometry(ui->barcodeLineEdit->geometry());
+    barcodeLineEdit->setAlignment(ui->barcodeLineEdit->alignment());
+    barcodeLineEdit->setStyleSheet(ui->barcodeLineEdit->styleSheet());
+
+    remarkLabel->setObjectName("remarkLabel_"+id);
+    remarkLabel->setText(ui->remarkLabel->text());
+    remarkLabel->setGeometry(ui->remarkLabel->geometry());
+    remarkLabel->setAlignment(ui->remarkLabel->alignment());
+    remarkLabel->setStyleSheet(ui->remarkLabel->styleSheet());
+
+    remarkLineEdit->setObjectName("remarkLineEdit_"+id);
+    remarkLineEdit->setText(ui->remarkLineEdit->text());
+    remarkLineEdit->setGeometry(ui->remarkLineEdit->geometry());
+    remarkLineEdit->setAlignment(ui->remarkLineEdit->alignment());
+    remarkLineEdit->setStyleSheet(ui->remarkLineEdit->styleSheet());
+
+    latestOperateLabel->setObjectName("latestOperateLabel_"+id);
+    latestOperateLabel->setText(ui->latestOperateLabel->text());
+    latestOperateLabel->setGeometry(ui->latestOperateLabel->geometry());
+    latestOperateLabel->setAlignment(ui->latestOperateLabel->alignment());
+    latestOperateLabel->setStyleSheet(ui->latestOperateLabel->styleSheet());
+
+    encoderButton->setObjectName("encoderButton_"+id);
+    encoderButton->setText(ui->encoderButton->text());
+    encoderButton->setGeometry(ui->encoderButton->geometry());
+    encoderButton->setStyleSheet(ui->encoderButton->styleSheet());
+
+    encodeBarcodeBtn->setObjectName("encodeBarcodeBtn_"+id);
+    encodeBarcodeBtn->setText(ui->encodeBarcodeBtn->text());
+    encodeBarcodeBtn->setGeometry(ui->encodeBarcodeBtn->geometry());
+    encodeBarcodeBtn->setStyleSheet(ui->encodeBarcodeBtn->styleSheet());
+
+    ui->tabWidget->addTab(tab,"New Tab " + id);
+    ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);//新增设置为当前tab页
+
+    encoderButton->installEventFilter(this);
+    encodeBarcodeBtn->installEventFilter(this);
+
+    //connect(encoderButton,SIGNAL(clicked()), this,SLOT(on_encoderButton_clicked()));
+    //connect(encodeBarcodeBtn,SIGNAL(clicked()), this,SLOT(on_encodeBarcodeBtn_clicked()));
+}
+
+bool MainWindow::eventFilter(QObject *target, QEvent *e)
+{
+    if(e->type() == QEvent::MouseButtonPress)
+    {
+        QMouseEvent *ms=static_cast<QMouseEvent*>(e);
+        if(ms->button()==Qt::LeftButton)
+        {
+            QString objectName=target->objectName();
+            int currentIndex = ui->tabWidget->currentIndex();
+            if (objectName.startsWith("encoderButton_",Qt::CaseSensitive)) {
+                this->encodeQRButtonClicked(currentIndex);
+            } else if (objectName.startsWith("encodeBarcodeBtn_",Qt::CaseSensitive)) {
+                 this->encodeBarcodeButtonClicked(currentIndex);
+            }
+        }
+    }
+
+    return QMainWindow::eventFilter(target, e);
+}
+
+void MainWindow::on_encoderButton_clicked()
+{
+    int currentIndex = ui->tabWidget->currentIndex();
+    this->encodeQRButtonClicked(currentIndex);
+}
+
+void MainWindow::on_encodeBarcodeBtn_clicked()
+{
+    int currentIndex = ui->tabWidget->currentIndex();
+    this->encodeBarcodeButtonClicked(currentIndex);
 }

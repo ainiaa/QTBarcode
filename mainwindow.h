@@ -27,53 +27,40 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-
+    static int tabNum;
 protected:
     void groupCompent();
+    void cloneTabPage();
     void encodeQRButtonClicked(int index);
     void encodeBarcodeButtonClicked(int index);
     virtual void resizeEvent(QResizeEvent *event);
-    QLineEdit* getRemarkLineEdit(int index);
-    QLineEdit* getBarcodeLineEdit(int index);
-    QLabel* getImgLabel(int index);
-    QLabel* getLatestOperateLabel(int index);
     void loadConfig();
     void writeConfig();
     void creatBtn();
 
+    QLineEdit* getRemarkLineEdit(int index);
+    QLineEdit* getBarcodeLineEdit(int index);
+    QLabel* getImgLabel(int index);
+    QLabel* getLatestOperateLabel(int index);
+
+    bool eventFilter(QObject *target, QEvent *e);
+
 
 private slots:
-    void on_encoderButton_clicked();
-
-    void on_encoderButton1_clicked();
-
-    void on_encoderButton2_clicked();
-
-    void on_encoderButton3_clicked();
-
-    void on_encoderButton4_clicked();
-
-    void on_encodeBarcodeBtn_clicked();
-
-    void on_encodeBarcodeBtn4_clicked();
-
-    void on_encodeBarcodeBtn3_clicked();
-
-    void on_encodeBarcodeBtn2_clicked();
-
-    void on_encodeBarcodeBtn1_clicked();
     void addNewTabPage();
     void removeSubTab(int);
-
     void receiveData(QString data);   //接收传递过来的数据的槽
 
+    void on_encoderButton_clicked();
+    void on_encodeBarcodeBtn_clicked();
+
 private:
-    static const int GROUP_NUM = 5;
     QList<QLineEdit*>* remarkLineEditList = new  QList<QLineEdit*>();
     QList<QLineEdit*>* barcodeLineEditList = new  QList<QLineEdit*>();
     QList<QLabel*>*  imgLabelList = new  QList<QLabel*>();
     QList<QLabel*>*  latestOperateLabelList = new  QList<QLabel*>();
 
+    static const int GROUP_NUM = 5;
     Ui::MainWindow *ui;
     Config* cfg = new Config();
 };

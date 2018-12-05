@@ -1,4 +1,4 @@
-#include "CoderForm.h"
+#include "coderform.h"
 #include <QUuid>
 #include <QMessageBox>
 #include <zint/backend/zint.h>

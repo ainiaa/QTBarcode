@@ -12,6 +12,7 @@ public:
     void Set(QString,QString,QVariant);
     QString GetConfigPath();
     QVariant Get(QString,QString);
+    int GetMaxNum();
 private:
     QString m_qstrFileName;
     QSettings *m_psetting;

@@ -358,6 +358,7 @@ void MainWindow::cloneTabPage()
     latestOperateLabel->setGeometry(ui->latestOperateLabel->geometry());
     latestOperateLabel->setAlignment(ui->latestOperateLabel->alignment());
     latestOperateLabel->setStyleSheet(ui->latestOperateLabel->styleSheet());
+    latestOperateLabel->setVisible(ui->latestOperateLabel->isVisible());
 
     encoderButton->setObjectName("encoderButton_"+id);
     encoderButton->setText(ui->encoderButton->text());

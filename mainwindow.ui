@@ -124,6 +124,9 @@
         <height>23</height>
        </rect>
       </property>
+      <property name="toolTip">
+       <string>dddd</string>
+      </property>
      </widget>
      <widget class="QPushButton" name="encoderButton">
       <property name="geometry">
@@ -159,6 +162,9 @@
         <width>181</width>
         <height>23</height>
        </rect>
+      </property>
+      <property name="placeholderText">
+       <string>默认为条码/二维码内容</string>
       </property>
      </widget>
      <widget class="QPushButton" name="encodeBarcodeBtn">

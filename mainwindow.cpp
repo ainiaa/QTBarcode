@@ -151,10 +151,12 @@ void MainWindow::encodeQRButtonClicked(int index)
     } else {
         QString remark = this->getRemarkLineEdit(index)->text();
 
-        if (!remark.isEmpty()) {
-            int currentIndex = ui->tabWidget->currentIndex();
-            ui->tabWidget->setTabText(currentIndex,remark);
+        if (remark.isEmpty()) {
+            remark = barcode;
+            this->getRemarkLineEdit(index)->setText(remark);
         }
+        int currentIndex = ui->tabWidget->currentIndex();
+        ui->tabWidget->setTabText(currentIndex,remark);
         QLabel* latestOperateLabel = this->getLatestOperateLabel(index);
         latestOperateLabel->setVisible(false);
         latestOperateLabel->setText(QString::number(BARCODE_QRCODE));
@@ -206,10 +208,11 @@ void MainWindow::encodeBarcodeButtonClicked(const int index)
     } else {
         QString remark = this->getRemarkLineEdit(index)->text();
         int currentIndex = ui->tabWidget->currentIndex();
-        if (!remark.isEmpty()) {
-
-            ui->tabWidget->setTabText(currentIndex,remark);
+        if (remark.isEmpty()) {
+            remark = barcode;
+            this->getRemarkLineEdit(index)->setText(remark);
         }
+        ui->tabWidget->setTabText(currentIndex,remark);
 
         QLabel* latestOperateLabel = this->getLatestOperateLabel(index);
         latestOperateLabel->setVisible(false);
@@ -330,31 +333,31 @@ void MainWindow::cloneTabPage()
     latestOperateLabelList->append(latestOperateLabel);
 
     imgLabel->setObjectName("imgLabel_"+id);
-    imgLabel->setText(ui->imgLabel->text());
     imgLabel->setGeometry(ui->imgLabel->geometry());
     imgLabel->setAlignment(ui->imgLabel->alignment());
     imgLabel->setStyleSheet(ui->imgLabel->styleSheet());
 
     barcodeLineEdit->setObjectName("barcodeLineEdit_"+id);
-    barcodeLineEdit->setText(ui->barcodeLineEdit->text());
+    //barcodeLineEdit->setText(ui->barcodeLineEdit->text());
+    barcodeLineEdit->setPlaceholderText(ui->barcodeLineEdit->placeholderText());
     barcodeLineEdit->setGeometry(ui->barcodeLineEdit->geometry());
     barcodeLineEdit->setAlignment(ui->barcodeLineEdit->alignment());
     barcodeLineEdit->setStyleSheet(ui->barcodeLineEdit->styleSheet());
 
     remarkLabel->setObjectName("remarkLabel_"+id);
-    remarkLabel->setText(ui->remarkLabel->text());
     remarkLabel->setGeometry(ui->remarkLabel->geometry());
     remarkLabel->setAlignment(ui->remarkLabel->alignment());
     remarkLabel->setStyleSheet(ui->remarkLabel->styleSheet());
 
     remarkLineEdit->setObjectName("remarkLineEdit_"+id);
-    remarkLineEdit->setText(ui->remarkLineEdit->text());
+    //remarkLineEdit->setText(ui->remarkLineEdit->text());
+    remarkLineEdit->setPlaceholderText(ui->remarkLineEdit->placeholderText());
     remarkLineEdit->setGeometry(ui->remarkLineEdit->geometry());
     remarkLineEdit->setAlignment(ui->remarkLineEdit->alignment());
     remarkLineEdit->setStyleSheet(ui->remarkLineEdit->styleSheet());
 
     latestOperateLabel->setObjectName("latestOperateLabel_"+id);
-    latestOperateLabel->setText(ui->latestOperateLabel->text());
+    //latestOperateLabel->setText(ui->latestOperateLabel->text());
     latestOperateLabel->setGeometry(ui->latestOperateLabel->geometry());
     latestOperateLabel->setAlignment(ui->latestOperateLabel->alignment());
     latestOperateLabel->setStyleSheet(ui->latestOperateLabel->styleSheet());
@@ -392,7 +395,7 @@ bool MainWindow::eventFilter(QObject *target, QEvent *e)
             if (objectName.startsWith("encoderButton_",Qt::CaseSensitive)) {
                 this->encodeQRButtonClicked(currentIndex);
             } else if (objectName.startsWith("encodeBarcodeBtn_",Qt::CaseSensitive)) {
-                 this->encodeBarcodeButtonClicked(currentIndex);
+                this->encodeBarcodeButtonClicked(currentIndex);
             }
         }
     }

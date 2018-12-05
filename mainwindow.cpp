@@ -375,7 +375,7 @@ void MainWindow::cloneTabPage()
     encoderButton->installEventFilter(this);
     encodeBarcodeBtn->installEventFilter(this);
 
-    //connect(encoderButton,SIGNAL(clicked()), this,SLOT(on_encoderButton_clicked()));
+    //connect(encoderButton,SIGNAL(clicked()), this,SLOT(on_encoderButton_clicked()));//这种方式会报段错误
     //connect(encodeBarcodeBtn,SIGNAL(clicked()), this,SLOT(on_encodeBarcodeBtn_clicked()));
 }
 

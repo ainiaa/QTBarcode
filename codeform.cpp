@@ -28,6 +28,21 @@ QLabel*  CodeForm::getImgLabel()
     return imgLabel;
 }
 
+QLabel*  CodeForm::getLatestOperateLabel()
+{
+    return latestOperateLabel;
+}
+
+QLineEdit*  CodeForm::getRemarkEdit()
+{
+    return remarkLineEdit;
+}
+
+QLineEdit*  CodeForm::getBarcodeEdit()
+{
+    return barcodeLineEdit;
+}
+
 QString CodeForm::getLatestOperate()
 {
     return latestOperateLabel->text();

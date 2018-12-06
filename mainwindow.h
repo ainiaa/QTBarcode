@@ -31,22 +31,15 @@ public:
     ~MainWindow();
     static int tabNum;
 protected:
-    void groupCompent();
     void cloneTabPage();
-    void encodeQRButtonClicked(int index);
-    void encodeBarcodeButtonClicked(int index);
-    virtual void resizeEvent(QResizeEvent *event);
+    void encodeQRButtonClicked();
+    void encodeBarcodeButtonClicked();
+
     void loadConfig();
     void writeConfig();
     void creatBtn();
-
-    QLineEdit* getRemarkLineEdit(int index);
-    QLineEdit* getBarcodeLineEdit(int index);
-    QLabel* getImgLabel(int index);
-    QLabel* getLatestOperateLabel(int index);
-
     bool eventFilter(QObject *target, QEvent *e);
-
+    virtual void resizeEvent(QResizeEvent *event);
 
 private slots:
     void addNewTabPage();
@@ -57,11 +50,7 @@ private slots:
     void on_encodeBarcodeBtn_clicked();
 
 private:
-    QList<QLineEdit*>* remarkLineEditList = new  QList<QLineEdit*>();
-    QList<QLineEdit*>* barcodeLineEditList = new  QList<QLineEdit*>();
-    QList<QLabel*>*  imgLabelList = new  QList<QLabel*>();
-    QList<QLabel*>*  latestOperateLabelList = new  QList<QLabel*>();
-    QMap<QString, CodeForm> qMap;
+    QMap<QString, CodeForm*> qMap;
     Ui::MainWindow *ui;
     Config* cfg = new Config();
 };

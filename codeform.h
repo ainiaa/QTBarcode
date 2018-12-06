@@ -12,6 +12,9 @@ public:
     QString getBarcode();
     QString getLatestOperate();
     QLabel* getImgLabel();
+    QLabel* getLatestOperateLabel();
+    QLineEdit* getRemarkEdit();
+    QLineEdit* getBarcodeEdit();
 
 private:
     QLabel *latestOperateLabel;

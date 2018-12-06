@@ -8,8 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    qMap.insert("tab", CodeForm(ui->latestOperateLabel,ui->imgLabel,ui->remarkLineEdit,ui->barcodeLineEdit));
-    groupCompent();
+    qMap.insert("tab", new CodeForm(ui->latestOperateLabel,ui->imgLabel,ui->remarkLineEdit,ui->barcodeLineEdit));
 
     //加载数据（如果需要的话，新增tabpage）
     loadConfig();
@@ -23,13 +22,6 @@ MainWindow::MainWindow(QWidget *parent) :
     setFixedSize(this->width(), this->height());
 }
 
-void MainWindow::groupCompent()
-{
-    remarkLineEditList->append(ui->remarkLineEdit);
-    barcodeLineEditList->append(ui->barcodeLineEdit);
-    imgLabelList->append(ui->imgLabel);
-    latestOperateLabelList->append(ui->latestOperateLabel);
-}
 
 void MainWindow::resizeEvent(QResizeEvent* event)
 {
@@ -66,17 +58,6 @@ MainWindow::~MainWindow()
     delete ui;
     delete cfg;
 
-    qDeleteAll(*remarkLineEditList);
-    remarkLineEditList->clear();
-
-    qDeleteAll(*barcodeLineEditList);
-    barcodeLineEditList->clear();
-
-    qDeleteAll(*imgLabelList);
-    imgLabelList->clear();
-
-    qDeleteAll(*latestOperateLabelList);
-    latestOperateLabelList->clear();
 }
 
 // 为tabwidget添加按钮
@@ -115,24 +96,26 @@ void MainWindow::loadConfig()
     }
     for(i =0; i < max;i++)
     {
+        ui->tabWidget->setCurrentIndex(i);
+        CodeForm* currentCodeForm = qMap.find(ui->tabWidget->currentWidget()->objectName()).value();
         QString index = QString::number(i);
         QString remark = cfg->Get(index,"remark").toString();
         if (!remark.isEmpty())
         {
-            this->getRemarkLineEdit(i)->setText(remark);
+            currentCodeForm->getRemarkEdit()->setText(remark);
             ui->tabWidget->setTabText(i,remark);
         }
 
         QString barcode =  cfg->Get(index,"barcode").toString();
         if (!barcode.isEmpty())
         {
-            this->getBarcodeLineEdit(i)->setText(barcode);
+            currentCodeForm->getBarcodeEdit()->setText(barcode);
             QString latestOperate = cfg->Get(index,"latestOperate").toString();
             if (latestOperate == QString::number(BARCODE_QRCODE))
             {
-                this->encodeQRButtonClicked(i);
+                this->encodeQRButtonClicked();
             } else {
-                this->encodeBarcodeButtonClicked(i);
+                this->encodeBarcodeButtonClicked();
             }
         }
     }
@@ -147,14 +130,16 @@ void MainWindow::writeConfig()
     int max_num = 0;
     for(int i =0; i < cnt;i++)
     {
+        ui->tabWidget->setCurrentIndex(i);
+        CodeForm* currentCodeForm = qMap.find(ui->tabWidget->currentWidget()->objectName()).value();
         QString index = QString::number(i);
-        QString barcode = this->getBarcodeLineEdit(i)->text();
+        QString barcode = currentCodeForm->getBarcode();
         if (!barcode.isEmpty())
         {
             cfg->Set(index,"barcode",barcode);
-            QString latestOperate = this->getLatestOperateLabel(i)->text();
+            QString latestOperate =currentCodeForm->getLatestOperate();
             cfg->Set(index,"latestOperate",latestOperate);
-            QString remark = this->getRemarkLineEdit(i)->text();
+            QString remark = currentCodeForm->getRemark();
             cfg->Set(index,"remark",remark);
             max_num++;
         }
@@ -163,26 +148,27 @@ void MainWindow::writeConfig()
 }
 
 //生成二维码
-void MainWindow::encodeQRButtonClicked(int index)
+void MainWindow::encodeQRButtonClicked()
 {
-    QString barcode = this->getBarcodeLineEdit(index)->text();
+    CodeForm* currentCodeForm = qMap.find(ui->tabWidget->currentWidget()->objectName()).value();
+    QString barcode = currentCodeForm->getBarcode();
     if (barcode.isEmpty()) {
         QMessageBox::information(this,"提示","请输入二维码内容");
     } else {
-        QString remark = this->getRemarkLineEdit(index)->text();
+        QString remark = currentCodeForm->getRemark();
 
         if (remark.isEmpty()) {
             remark = barcode;
-            this->getRemarkLineEdit(index)->setText(remark);
+            currentCodeForm->getRemarkEdit()->setText(remark);
         }
         int currentIndex = ui->tabWidget->currentIndex();
         ui->tabWidget->setTabText(currentIndex,remark);
-        QLabel* latestOperateLabel = this->getLatestOperateLabel(index);
+        QLabel* latestOperateLabel =  currentCodeForm->getLatestOperateLabel();
         latestOperateLabel->setVisible(false);
         latestOperateLabel->setText(QString::number(BARCODE_QRCODE));
 
         struct zint_symbol *my_symbol = ZBarcode_Create();
-        if(my_symbol != NULL)  {
+        if(my_symbol != nullptr)  {
             my_symbol->symbology= BARCODE_QRCODE;
             my_symbol->border_width = 1;
             my_symbol->whitespace_width = 1;
@@ -207,7 +193,7 @@ void MainWindow::encodeQRButtonClicked(int index)
             barcodeImg->load(fileName);
             QPixmap pixmap = QPixmap::fromImage(*barcodeImg);
             remove(fileNameCC);
-            QLabel* currentImgLabel =this->getImgLabel(index);
+            QLabel* currentImgLabel = currentCodeForm->getImgLabel();
             int width = currentImgLabel->width();
             int height = currentImgLabel->height();
             printf("label height:%d width:%d!\n",height,width);
@@ -220,26 +206,27 @@ void MainWindow::encodeQRButtonClicked(int index)
 }
 
 //生成条码
-void MainWindow::encodeBarcodeButtonClicked(const int index)
+void MainWindow::encodeBarcodeButtonClicked()
 {
-    QString barcode = this->getBarcodeLineEdit(index)->text();
+    CodeForm* currentCodeForm = qMap.find(ui->tabWidget->currentWidget()->objectName()).value();
+    QString barcode = currentCodeForm->getBarcode();
     if (barcode.isEmpty()) {
         QMessageBox::information(this,"提示","请输入条形码内容");
     } else {
-        QString remark = this->getRemarkLineEdit(index)->text();
+        QString remark = currentCodeForm->getRemark();
         int currentIndex = ui->tabWidget->currentIndex();
         if (remark.isEmpty()) {
             remark = barcode;
-            this->getRemarkLineEdit(index)->setText(remark);
+            currentCodeForm->getRemarkEdit()->setText(remark);
         }
         ui->tabWidget->setTabText(currentIndex,remark);
 
-        QLabel* latestOperateLabel = this->getLatestOperateLabel(index);
+        QLabel* latestOperateLabel =  currentCodeForm->getLatestOperateLabel();
         latestOperateLabel->setVisible(false);
         latestOperateLabel->setText(QString::number(BARCODE_CODE128));
 
         struct zint_symbol *my_symbol = ZBarcode_Create();
-        if(my_symbol != NULL)  {
+        if(my_symbol != nullptr)  {
             //my_symbol->eci = 26; //utf-8
             //string text = "dddddaaa";
             //memcpy(my_symbol->text, &text[0], text.size());
@@ -275,19 +262,12 @@ void MainWindow::encodeBarcodeButtonClicked(const int index)
             barcodeImg->load(fileName);
             QPixmap pixmap = QPixmap::fromImage(*barcodeImg);
             remove(fileNameCC);
-            QLabel* currentImgLabel =this->getImgLabel(index);
-            int width = currentImgLabel->width();
-            int height = currentImgLabel->height();
-            //height = pixmap.height();
-            //printf("label height:%d width:%d!\n",height,width);
+            QLabel* currentImgLabel = currentCodeForm->getImgLabel();
             int width1 = 429;
-            int height1 = 180;//pixmap.height();
-            //printf("pixmap height:%d width:%d!\n",height1,width1);
-            //currentImgLabel->setPixmap(pixmap);
+            int height1 = 180;
             QPixmap fitpixmap = pixmap.scaled(width1, height1, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
             currentImgLabel->setPixmap(fitpixmap);
             currentImgLabel->setAlignment(Qt::AlignCenter);
-            //ui->tabWidget->setStyleSheet("background-color:gainsboro");//gainsboro  silver ghostwhite
             currentImgLabel->setStyleSheet("background-color:gainsboro");
         }
     }
@@ -296,33 +276,10 @@ void MainWindow::encodeBarcodeButtonClicked(const int index)
 void MainWindow::addNewTabPage()
 {
     MainWindow::cloneTabPage();
-    return;
-    QWidget * tab = new CoderForm(nullptr,cfg);
-    ui->tabWidget->addTab(tab,"new tab " +((CoderForm*) tab)->getId());
-
-    ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);//新增设置为当前tab页
-
-    connect(tab, SIGNAL(sendData(QString)), this, SLOT(receiveData(QString)));
-}
-
-//获得备注控件
-QLineEdit* MainWindow::getRemarkLineEdit(int index)
-{
-    return remarkLineEditList->at(index);
-}
-//获得条码控件
-QLineEdit* MainWindow::getBarcodeLineEdit(int index)
-{
-    return barcodeLineEditList->at(index);
-}
-//获得img展示容器
-QLabel* MainWindow::getImgLabel(int index)
-{
-    return imgLabelList->at(index);
-}
-QLabel* MainWindow::getLatestOperateLabel(int index)
-{
-    return latestOperateLabelList->at(index);
+    //QWidget * tab = new CoderForm(nullptr,cfg);
+    //ui->tabWidget->addTab(tab,"new tab " +((CoderForm*) tab)->getId());
+   // ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);//新增设置为当前tab页
+    //connect(tab, SIGNAL(sendData(QString)), this, SLOT(receiveData(QString)));
 }
 
 //复制  tabPage 内容
@@ -347,11 +304,6 @@ void MainWindow::cloneTabPage()
     codeLabel->setGeometry(ui->codeLabel->geometry());
     codeLabel->setAlignment(ui->codeLabel->alignment());
     codeLabel->setStyleSheet(ui->codeLabel->styleSheet());
-
-    remarkLineEditList->append(remarkLineEdit);
-    barcodeLineEditList->append(barcodeLineEdit);
-    imgLabelList->append(imgLabel);
-    latestOperateLabelList->append(latestOperateLabel);
 
     imgLabel->setObjectName("imgLabel_"+id);
     imgLabel->setGeometry(ui->imgLabel->geometry());
@@ -397,28 +349,28 @@ void MainWindow::cloneTabPage()
     ui->tabWidget->addTab(tab,"New Tab " + id);
     ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);//新增设置为当前tab页
 
-    encoderButton->installEventFilter(this);
-    encodeBarcodeBtn->installEventFilter(this);
+    //encoderButton->installEventFilter(this);
+    //encodeBarcodeBtn->installEventFilter(this);
 
-    qMap.insert(tabName, CodeForm(latestOperateLabel,imgLabel,remarkLineEdit,barcodeLineEdit));
+    qMap.insert(tabName, new CodeForm(latestOperateLabel,imgLabel,remarkLineEdit,barcodeLineEdit));
 
-    //connect(encoderButton,SIGNAL(clicked()), this,SLOT(on_encoderButton_clicked()));//这种方式会报段错误
-    //connect(encodeBarcodeBtn,SIGNAL(clicked()), this,SLOT(on_encodeBarcodeBtn_clicked()));
+    connect(encoderButton,SIGNAL(clicked()), this,SLOT(on_encoderButton_clicked()));//这种方式会报段错误
+    connect(encodeBarcodeBtn,SIGNAL(clicked()), this,SLOT(on_encodeBarcodeBtn_clicked()));
 }
 
 bool MainWindow::eventFilter(QObject *target, QEvent *e)
 {
+    return true;
     if(e->type() == QEvent::MouseButtonPress)
     {
         QMouseEvent *ms=static_cast<QMouseEvent*>(e);
         if(ms->button()==Qt::LeftButton)
         {
             QString objectName=target->objectName();
-            int currentIndex = ui->tabWidget->currentIndex();
             if (objectName.startsWith("encoderButton_",Qt::CaseSensitive)) {
-                this->encodeQRButtonClicked(currentIndex);
+                this->encodeQRButtonClicked();
             } else if (objectName.startsWith("encodeBarcodeBtn_",Qt::CaseSensitive)) {
-                this->encodeBarcodeButtonClicked(currentIndex);
+                this->encodeBarcodeButtonClicked();
             }
         }
     }
@@ -429,17 +381,11 @@ bool MainWindow::eventFilter(QObject *target, QEvent *e)
 //生成二维码
 void MainWindow::on_encoderButton_clicked()
 {
-    int currentIndex = ui->tabWidget->currentIndex();
-    QWidget* tab = ui->tabWidget->currentWidget();
-    QMessageBox::information(this,"提示信息",tab->objectName());
-    this->encodeQRButtonClicked(currentIndex);
+    this->encodeQRButtonClicked();
 }
 
 //生成条码
 void MainWindow::on_encodeBarcodeBtn_clicked()
 {
-    int currentIndex = ui->tabWidget->currentIndex();
-    QWidget* tab = ui->tabWidget->currentWidget();
-    QMessageBox::information(this,"提示信息",tab->objectName());
-    this->encodeBarcodeButtonClicked(currentIndex);
+    this->encodeBarcodeButtonClicked();
 }

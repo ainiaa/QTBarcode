@@ -13,8 +13,10 @@
 #include <QHBoxLayout>
 #include<QResizeEvent>
 #include <QList>
+#include <QMap>
 #include <config.h>
 #include <coderform.h>
+#include <codeform.h>
 
 namespace Ui {
 class MainWindow;
@@ -59,8 +61,7 @@ private:
     QList<QLineEdit*>* barcodeLineEditList = new  QList<QLineEdit*>();
     QList<QLabel*>*  imgLabelList = new  QList<QLabel*>();
     QList<QLabel*>*  latestOperateLabelList = new  QList<QLabel*>();
-
-    static const int GROUP_NUM = 5;
+    QMap<QString, CodeForm> qMap;
     Ui::MainWindow *ui;
     Config* cfg = new Config();
 };

@@ -8,14 +8,19 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    qMap.insert("tab", CodeForm(ui->latestOperateLabel,ui->imgLabel,ui->remarkLineEdit,ui->barcodeLineEdit));
     groupCompent();
+
+    //加载数据（如果需要的话，新增tabpage）
     loadConfig();
 
-    //新增
+    //添加新增tab按钮
     creatBtn();
+
     //关闭tab
     connect(ui->tabWidget,SIGNAL(tabCloseRequested(int)),this,SLOT(removeSubTab(int)));
-    //setFixedSize(this->width(), this->height());
+
+    setFixedSize(this->width(), this->height());
 }
 
 void MainWindow::groupCompent()
@@ -44,7 +49,15 @@ void MainWindow::resizeEvent(QResizeEvent* event)
 //关闭tab
 void MainWindow::removeSubTab(int index)
 {
-    ui->tabWidget->removeTab(index);
+    int cnt = ui->tabWidget->count();
+    if (cnt > 1)
+    {
+        ui->tabWidget->removeTab(index);
+    }
+    else
+    {
+        QMessageBox::critical(this,"最后一个不允许关闭","最后一个不允许关闭");
+    }
 }
 
 MainWindow::~MainWindow()
@@ -128,18 +141,25 @@ void MainWindow::loadConfig()
 //写入config
 void MainWindow::writeConfig()
 {
+    //清除老数据
+    cfg->Clear();
     int cnt = ui->tabWidget->count();
-    cfg->Set("init","max_num",cnt);
+    int max_num = 0;
     for(int i =0; i < cnt;i++)
     {
         QString index = QString::number(i);
-        QString remark = this->getRemarkLineEdit(i)->text();
-        cfg->Set(index,"remark",remark);
         QString barcode = this->getBarcodeLineEdit(i)->text();
-        cfg->Set(index,"barcode",barcode);
-        QString latestOperate = this->getLatestOperateLabel(i)->text();
-        cfg->Set(index,"latestOperate",latestOperate);
+        if (!barcode.isEmpty())
+        {
+            cfg->Set(index,"barcode",barcode);
+            QString latestOperate = this->getLatestOperateLabel(i)->text();
+            cfg->Set(index,"latestOperate",latestOperate);
+            QString remark = this->getRemarkLineEdit(i)->text();
+            cfg->Set(index,"remark",remark);
+            max_num++;
+        }
     }
+    cfg->Set("init","max_num",max_num);
 }
 
 //生成二维码
@@ -309,8 +329,9 @@ QLabel* MainWindow::getLatestOperateLabel(int index)
 void MainWindow::cloneTabPage()
 {
     QString  id = QString::number(++MainWindow::tabNum);
+    QString tabName = "tab_"+id;
     QWidget *tab = new QWidget();
-    tab->setObjectName("tab_"+id);
+    tab->setObjectName(tabName);
 
     QLabel *codeLabel = new QLabel(tab);
     QLabel *imgLabel = new QLabel(tab);
@@ -379,6 +400,8 @@ void MainWindow::cloneTabPage()
     encoderButton->installEventFilter(this);
     encodeBarcodeBtn->installEventFilter(this);
 
+    qMap.insert(tabName, CodeForm(latestOperateLabel,imgLabel,remarkLineEdit,barcodeLineEdit));
+
     //connect(encoderButton,SIGNAL(clicked()), this,SLOT(on_encoderButton_clicked()));//这种方式会报段错误
     //connect(encodeBarcodeBtn,SIGNAL(clicked()), this,SLOT(on_encodeBarcodeBtn_clicked()));
 }
@@ -403,14 +426,20 @@ bool MainWindow::eventFilter(QObject *target, QEvent *e)
     return QMainWindow::eventFilter(target, e);
 }
 
+//生成二维码
 void MainWindow::on_encoderButton_clicked()
 {
     int currentIndex = ui->tabWidget->currentIndex();
+    QWidget* tab = ui->tabWidget->currentWidget();
+    QMessageBox::information(this,"提示信息",tab->objectName());
     this->encodeQRButtonClicked(currentIndex);
 }
 
+//生成条码
 void MainWindow::on_encodeBarcodeBtn_clicked()
 {
     int currentIndex = ui->tabWidget->currentIndex();
+    QWidget* tab = ui->tabWidget->currentWidget();
+    QMessageBox::information(this,"提示信息",tab->objectName());
     this->encodeBarcodeButtonClicked(currentIndex);
 }

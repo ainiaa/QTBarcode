@@ -13,8 +13,9 @@ public:
     QString GetConfigPath();
     QVariant Get(QString,QString);
     int GetMaxNum();
+    void Clear();
 private:
-    QString m_qstrFileName;
-    QSettings *m_psetting;
+    QString fileName;
+    QSettings *cfg;
 };
 #endif // CONFIG_H

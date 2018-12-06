@@ -6,39 +6,44 @@ Config::Config(QString qstrfilename)
 {
     if (qstrfilename.isEmpty())
     {
-        m_qstrFileName = this->GetConfigPath()+ "Config.ini";
-        printf("fileName:%s", m_qstrFileName.toUtf8().data());
+        fileName = this->GetConfigPath()+ "Config.ini";
+        printf("fileName:%s", fileName.toUtf8().data());
     }
     else
     {
-        m_qstrFileName = this->GetConfigPath() + qstrfilename;
+        fileName = this->GetConfigPath() + qstrfilename;
     }
 
-    m_psetting = new QSettings(m_qstrFileName, QSettings::IniFormat);
-    m_psetting->setIniCodec("UTF8");
+    cfg = new QSettings(fileName, QSettings::IniFormat);
+    cfg->setIniCodec("UTF8");
 }
 Config::~Config()
 {
-    delete m_psetting;
+    delete cfg;
+    fileName = nullptr;
 }
 void Config::Set(QString qstrnodename,QString qstrkeyname,QVariant qvarvalue)
 {
-    m_psetting->setValue(QString("/%1/%2").arg(qstrnodename).arg(qstrkeyname), qvarvalue);
+    cfg->setValue(QString("/%1/%2").arg(qstrnodename).arg(qstrkeyname), qvarvalue);
 }
 
 QVariant Config::Get(QString qstrnodename,QString qstrkeyname)
 {
-    QVariant qvar = m_psetting->value(QString("/%1/%2").arg(qstrnodename).arg(qstrkeyname));
+    QVariant qvar = cfg->value(QString("/%1/%2").arg(qstrnodename).arg(qstrkeyname));
     return qvar;
 }
 
 int Config::GetMaxNum()
 {
-    QVariant qvar = m_psetting->value("/init/max_num");
+    QVariant qvar = cfg->value("/init/max_num");
     return qvar.toInt();
 }
 
 QString Config::GetConfigPath()
 {
     return QDir::homePath()+ "/.barcode/";
+}
+void Config::Clear()
+{
+    cfg->clear();
 }

@@ -354,7 +354,7 @@ void MainWindow::cloneTabPage()
 
     qMap.insert(tabName, new CodeForm(latestOperateLabel,imgLabel,remarkLineEdit,barcodeLineEdit));
 
-    connect(encoderButton,SIGNAL(clicked()), this,SLOT(on_encoderButton_clicked()));//这种方式会报段错误
+    connect(encoderButton,SIGNAL(clicked()), this,SLOT(on_encoderButton_clicked()));
     connect(encodeBarcodeBtn,SIGNAL(clicked()), this,SLOT(on_encodeBarcodeBtn_clicked()));
 }
 
